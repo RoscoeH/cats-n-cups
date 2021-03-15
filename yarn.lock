@@ -5916,6 +5916,20 @@ dnd-core@14.0.0:
     "@react-dnd/invariant" "^2.0.0"
     redux "^4.0.5"
 
+dnd-core@^11.1.3:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-11.1.3.tgz#f92099ba7245e49729d2433157031a6267afcc98"
+  integrity sha512-QugF55dNW+h+vzxVJ/LSJeTeUw9MCJ2cllhmVThVPEtF16ooBkxj0WBE5RB+AceFxMFo1rO6bJKXtqKl+JNnyA==
+  dependencies:
+    "@react-dnd/asap" "^4.0.0"
+    "@react-dnd/invariant" "^2.0.0"
+    redux "^4.0.4"
+
+dnd-multi-backend@^7.0.0-alpha.1:
+  version "7.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-7.0.0-alpha.1.tgz#c363f6e01e638a190fb754518cd5d0d1d2bed47b"
+  integrity sha512-ovykVTtM+LmMMVAHMk47fl5Ga/aGzspK6AbTOWT7daX9vOGr/Y4nBFiUou5Tp6Rdv+7eXMa9Ul5IN9JtSWkQrA==
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -11750,6 +11764,15 @@ raw-loader@^4.0.1:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+rdndmb-html5-to-touch@^7.0.0-alpha.1:
+  version "7.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/rdndmb-html5-to-touch/-/rdndmb-html5-to-touch-7.0.0-alpha.1.tgz#5695fc3ffc3c52a5ec435c8473e0925d581f77f3"
+  integrity sha512-aLYc8yylqJXY+6AsDGMpgDcNmHtPUSGJjqKTJZdTy2ws6c/8ITRanO6lZIl99ZnnVEv0elNq09bLBAAYSpKb1w==
+  dependencies:
+    dnd-multi-backend "^7.0.0-alpha.1"
+    react-dnd-html5-backend "^11.1.3"
+    react-dnd-touch-backend "^11.1.3"
+
 react-app-polyfill@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-2.0.0.tgz#a0bea50f078b8a082970a9d853dc34b6dcc6a3cf"
@@ -11805,11 +11828,47 @@ react-dev-utils@^11.0.3:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
+react-dnd-html5-backend@^11.1.3:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-11.1.3.tgz#2749f04f416ec230ea193f5c1fbea2de7dffb8f7"
+  integrity sha512-/1FjNlJbW/ivkUxlxQd7o3trA5DE33QiRZgxent3zKme8DwF4Nbw3OFVhTRFGaYhHFNL1rZt6Rdj1D78BjnNLw==
+  dependencies:
+    dnd-core "^11.1.3"
+
 react-dnd-html5-backend@^14.0.0:
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-14.0.0.tgz#28d660a2ad1e07447c34a65cd25f7de8f1657194"
   integrity sha512-2wAQqRFC1hbRGmk6+dKhOXsyQQOn3cN8PSZyOUeOun9J8t3tjZ7PS2+aFu7CVu2ujMDwTJR3VTwZh8pj2kCv7g==
   dependencies:
+    dnd-core "14.0.0"
+
+react-dnd-multi-backend@^7.0.0-alpha.1:
+  version "7.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-dnd-multi-backend/-/react-dnd-multi-backend-7.0.0-alpha.1.tgz#3d4be33d3289b471431668a84afa5593310f40be"
+  integrity sha512-Jg7OpV1z0B/IiLG6YdABh7lDXsgiOnjyMLns+drLKk/ShmX1Horg9iA+gvsace8NP2gdPlpW9aHFgn+Tvo0SrA==
+  dependencies:
+    dnd-multi-backend "^7.0.0-alpha.1"
+    react-dnd-preview "^7.0.0-alpha.1"
+
+react-dnd-preview@^7.0.0-alpha.1:
+  version "7.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-dnd-preview/-/react-dnd-preview-7.0.0-alpha.1.tgz#1ea4dfa2cff12a9a3a76160bfc31f0a197b08808"
+  integrity sha512-9C/sEnHk83MT1Pw1o5ctg+s8JrQuulBBDCbW0ITLjw00ZU6r7k4fq0qI3hYHNM7Tm73SCLUSqs3s9V0NTjXGzg==
+
+react-dnd-touch-backend@^11.1.3:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-11.1.3.tgz#df721eee4fcec98388216c7e7cc10b170aef7aab"
+  integrity sha512-8lz4fxfYwUuJ6Y2seQYwh8+OfwKcbBX0CIbz7AwXfBYz54Wg2nIDU6CP8Dyybt/Wyx4D3oXmTPEaOMB62uqJvQ==
+  dependencies:
+    "@react-dnd/invariant" "^2.0.0"
+    dnd-core "^11.1.3"
+
+react-dnd-touch-backend@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-14.0.0.tgz#f7f144ca4af17946e20cdfd06a766ebadd170d4d"
+  integrity sha512-fNt3isf9h0xgjj86dIXhBi3dJ7OhC88vKUYdEvsOGypdp3LOFD+TobBAuBu00v26WmJ6II6xqbkhOx+KOcyHxQ==
+  dependencies:
+    "@react-dnd/invariant" "^2.0.0"
     dnd-core "14.0.0"
 
 react-dnd@^14.0.1:
@@ -12159,7 +12218,7 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redux@^4.0.5:
+redux@^4.0.4, redux@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
   integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==

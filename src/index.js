@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd-multi-backend";
+import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { ThemeProvider } from "theme-ui";
 
 import theme from "./theme";
@@ -11,7 +11,7 @@ import theme from "./theme";
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider options={HTML5toTouch}>
         <App />
       </DndProvider>
     </ThemeProvider>
