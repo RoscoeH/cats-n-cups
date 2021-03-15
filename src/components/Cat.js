@@ -37,7 +37,7 @@ const Legs = () => (
 );
 
 const Face = ({ mood }) => (
-  <g transform="translate(6, 8)" fill="black">
+  <g transform="translate(22, 24)" fill="black">
     {mood === MOODS.SLEEPY ? (
       <g>
         <path d="M16.5 1.5C16.7761 1.5 17 1.72386 17 2C17 2.55228 17.4477 3 18 3C18.5523 3 19 2.55228 19 2C19 1.72386 19.2239 1.5 19.5 1.5C19.7761 1.5 20 1.72386 20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 1.72386 16.2239 1.5 16.5 1.5Z" />
@@ -57,11 +57,29 @@ const Face = ({ mood }) => (
   </g>
 );
 
-const Cat = ({ id, mood }) => {
-  const [{ isDragging }, dragRef] = useDrag(
+export const Cat = ({ id, color, mood }) => (
+  <svg width="64" height="64">
+    <mask id={`catMask${id}`}>
+      <g fill="white" transform="translate(16 16)">
+        <Body />
+        {mood !== MOODS.SLEEPY && (
+          <g>
+            <Legs />
+            <Tail />
+          </g>
+        )}
+      </g>
+    </mask>
+    <Pattern color={color || "blue"} mask={`url(#catMask${id})`} />
+    <Face mood={mood} />
+  </svg>
+);
+
+const DraggableCat = ({ id, color, mood }) => {
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.CAT,
-      item: { id },
+      item: { id, color },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
@@ -69,22 +87,10 @@ const Cat = ({ id, mood }) => {
     []
   );
   return (
-    <g ref={dragRef}>
-      <mask id="catMask">
-        <g fill="white">
-          <Body />
-          {mood !== MOODS.SLEEPY && (
-            <g>
-              <Legs />
-              <Tail />
-            </g>
-          )}
-        </g>
-      </mask>
-      <Pattern color="blue" mask="url(#catMask)" />
-      <Face mood={mood} />
-    </g>
+    <div ref={drag} sx={{ opacity: isDragging ? 0 : 1 }}>
+      <Cat id={id} color={color} mood={mood} />
+    </div>
   );
 };
 
-export default Cat;
+export default DraggableCat;
