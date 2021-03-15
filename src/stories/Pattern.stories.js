@@ -36,3 +36,6 @@ Cinnamon.args = { color: "cinnamon" };
 
 export const Chocolate = Template.bind({});
 Chocolate.args = { color: "chocolate" };
+
+export const Brown = Template.bind({});
+Brown.args = { color: "brown" };

@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import Cat from "./components/Cat";
 import Cup from "./components/Cup";
 import Dock from "./components/Dock";
+import CustomDragLayer from "./components/CustomDragLayer";
 
 import { Game } from "./Game";
 import { useState, useEffect, useMemo } from "react";
@@ -20,15 +21,16 @@ function App() {
   console.log("num cats", numCats);
   return (
     <div className="App">
+      <CustomDragLayer />
       <div>
         {range(game.rows).map((row) => (
-          <div style={{ display: "flex" }}>
+          <div key={row} style={{ display: "flex" }}>
             {range(game.cols).map((col) => {
               const cat = game.cats.find(
                 (cat) => cat.x === col && cat.y === row
               );
               return (
-                <Cup x={col} y={row} game={game}>
+                <Cup key={row * game.cols + col} x={col} y={row} game={game}>
                   {cat && <Cat id={cat.id} mad={cat.mad} />}
                 </Cup>
               );
