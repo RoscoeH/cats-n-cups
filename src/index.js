@@ -4,12 +4,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { ThemeProvider } from "theme-ui";
+
+import theme from "./theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DndProvider backend={HTML5Backend}>
-      <App />
-    </DndProvider>
+    <ThemeProvider theme={theme}>
+      <DndProvider backend={HTML5Backend}>
+        <App />
+      </DndProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
