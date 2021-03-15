@@ -17,13 +17,14 @@ function App() {
 
   useEffect(() => game.observe(setNumCats), [game]);
 
-  console.log("render app");
   console.log("num cats", numCats);
   return (
     <div className="App">
       <CustomDragLayer />
       <div>
         <p>{`Moves: ${game.moves}`}</p>
+        <p>{`Time: ${game.time}`}</p>
+        {game.solved && <p>You win!</p>}
       </div>
       <div>
         {range(game.rows).map((row) => (

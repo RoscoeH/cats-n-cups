@@ -33,6 +33,10 @@ export class Game {
     this.cols = cols;
     this.cats = [];
     this.moves = 0;
+    this.startTime = null;
+    this.time = "0s";
+    this.timer = null;
+    this.solved = false;
 
     this.observers = [];
 
@@ -91,6 +95,9 @@ export class Game {
         }
       }
     }
+
+    // Shuffle once again
+    shuffle(this.cats);
   }
 
   observe(o) {
@@ -125,7 +132,42 @@ export class Game {
     cat.y = toY;
 
     this.moves++;
+
+    if (this.startTime === null) {
+      this.startTime = Date.now();
+      this.timer = setInterval(() => this.calculateTime(), 1000);
+    }
+
     this.setMoods();
+    this.checkSolved();
+
+    this.emitChange();
+  }
+
+  checkSolved() {
+    // Check every cat has a position and are happy
+    if (
+      this.cats.every(
+        (cat) => cat.x !== null && cat.y !== null && cat.mad === false
+      )
+    ) {
+      this.solved = true;
+      clearInterval(this.timer);
+    }
+  }
+
+  calculateTime() {
+    const totalSeconds = Math.floor((Date.now() - this.startTime) / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    console.log(totalSeconds, minutes, seconds);
+
+    this.time = `${seconds}s`;
+
+    if (minutes > 0) {
+      this.time = `${minutes}m ${this.time}`;
+    }
+
     this.emitChange();
   }
 
