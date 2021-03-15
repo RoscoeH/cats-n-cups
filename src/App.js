@@ -23,6 +23,9 @@ function App() {
     <div className="App">
       <CustomDragLayer />
       <div>
+        <p>{`Moves: ${game.moves}`}</p>
+      </div>
+      <div>
         {range(game.rows).map((row) => (
           <div key={row} style={{ display: "flex" }}>
             {range(game.cols).map((col) => {

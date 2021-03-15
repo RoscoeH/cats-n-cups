@@ -32,6 +32,8 @@ export class Game {
     this.rows = rows;
     this.cols = cols;
     this.cats = [];
+    this.moves = 0;
+
     this.observers = [];
 
     this.createCats();
@@ -105,6 +107,7 @@ export class Game {
     cat.x = null;
     cat.y = null;
 
+    this.moves++;
     this.setMoods();
     this.emitChange();
   }
@@ -121,8 +124,8 @@ export class Game {
     cat.x = toX;
     cat.y = toY;
 
+    this.moves++;
     this.setMoods();
-
     this.emitChange();
   }
 
