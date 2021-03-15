@@ -8,6 +8,7 @@ export default {
     text: "#000",
     background: "#fff",
     primary: "#33e",
+    dark: "#000",
     cup: "#5C606F",
     cat: {
       black: "#333333",
@@ -18,6 +19,7 @@ export default {
       amber: "#F1D256",
       cinnamon: "#C18A2D",
       chocolate: "#83692C",
+      brown: "#B59978",
       red: "#FF5353",
     },
   },
