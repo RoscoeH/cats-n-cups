@@ -1,8 +1,9 @@
-import React from "react";
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx } from "theme-ui";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../constants";
-
-import Cat from "./Cat";
+import Cat, { MOODS } from "./Cat";
 
 const Dock = ({ game }) => {
   const [{ canDrop }, drop] = useDrop(() => ({
@@ -15,24 +16,28 @@ const Dock = ({ game }) => {
     }),
   }));
 
-  const undockedCats = game.cats.filter(
-    (cat) => cat.x === null || cat.y === null
-  );
   return (
     <div
       ref={drop}
-      style={{
+      width="100%"
+      sx={{
         display: "flex",
-        border: "1px solid black",
-        borderRadius: 64,
-        padding: 8,
-        height: 128,
-        backgroundColor: canDrop ? "gray" : "transparent",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        border: "1px dashed",
+        borderColor: "dark",
+        borderRadius: 16,
+        p: "16px",
+        minHeight: "128px",
       }}
     >
-      {undockedCats.map((cat) => (
-        <Cat key={cat.id} id={cat.id} />
-      ))}
+      {game.cats.map((cat) =>
+        cat.x == null && cat.y == null ? (
+          <Cat key={cat.id} id={cat.id} color={cat.color} mood={MOODS.SLEEPY} />
+        ) : (
+          <div key={cat.id} sx={{ width: "64px", height: "64px" }} />
+        )
+      )}
     </div>
   );
 };
