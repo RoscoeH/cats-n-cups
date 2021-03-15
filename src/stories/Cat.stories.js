@@ -16,11 +16,7 @@ export default {
   ],
 };
 
-const Template = (args) => (
-  <svg width="64" height="64">
-    <Cat {...args} />
-  </svg>
-);
+const Template = (args) => <Cat {...args} />;
 
 export const Happy = Template.bind({});
 Happy.args = { mood: MOODS.HAPPY };

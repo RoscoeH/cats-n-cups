@@ -16,10 +16,6 @@ export default {
   ],
 };
 
-const Template = (args) => (
-  <svg width="48" height="48">
-    <Cup {...args} />
-  </svg>
-);
+const Template = (args) => <Cup {...args} />;
 
 export const Default = Template.bind({});
