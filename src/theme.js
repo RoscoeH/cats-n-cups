@@ -8,6 +8,7 @@ export default {
     text: "#000",
     background: "#fff",
     primary: "#33e",
+    cup: "#5C606F",
     cat: {
       black: "#333333",
       blue: "#8C9399",
