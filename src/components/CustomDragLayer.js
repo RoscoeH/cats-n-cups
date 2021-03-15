@@ -1,5 +1,4 @@
 import { useDragLayer } from "react-dnd";
-
 import { Cat } from "./Cat";
 import { ItemTypes } from "../constants";
 

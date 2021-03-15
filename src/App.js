@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import Cat from "./components/Cat";
+import Cat, { MOODS } from "./components/Cat";
 import Cup from "./components/Cup";
 import Dock from "./components/Dock";
 import CustomDragLayer from "./components/CustomDragLayer";
@@ -31,7 +31,14 @@ function App() {
               );
               return (
                 <Cup key={row * game.cols + col} x={col} y={row} game={game}>
-                  {cat && <Cat id={cat.id} mad={cat.mad} />}
+                  {cat && (
+                    <Cat
+                      id={cat.id}
+                      color={cat.color}
+                      mood={cat.mad ? MOODS.GRUMPY : MOODS.HAPPY}
+                      cupped
+                    />
+                  )}
                 </Cup>
               );
             })}

@@ -1,7 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "theme-ui";
+import { useEffect } from "react";
 import { useDrag } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
 
 import { ItemTypes } from "../constants";
 import Pattern from "./Pattern";
@@ -37,7 +39,7 @@ const Legs = () => (
 );
 
 const Face = ({ mood }) => (
-  <g transform="translate(22, 24)" fill="black">
+  <g transform="translate(18, 20)" fill="black">
     {mood === MOODS.SLEEPY ? (
       <g>
         <path d="M16.5 1.5C16.7761 1.5 17 1.72386 17 2C17 2.55228 17.4477 3 18 3C18.5523 3 19 2.55228 19 2C19 1.72386 19.2239 1.5 19.5 1.5C19.7761 1.5 20 1.72386 20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 1.72386 16.2239 1.5 16.5 1.5Z" />
@@ -57,10 +59,10 @@ const Face = ({ mood }) => (
   </g>
 );
 
-export const Cat = ({ id, color, mood }) => (
-  <svg width="64" height="64">
+export const Cat = ({ id, color, mood, cupped }) => (
+  <svg width="56" height="56">
     <mask id={`catMask${id}`}>
-      <g fill="white" transform="translate(16 16)">
+      <g fill="white" transform="translate(12 12)">
         <Body />
         {mood !== MOODS.SLEEPY && (
           <g>
@@ -70,13 +72,21 @@ export const Cat = ({ id, color, mood }) => (
         )}
       </g>
     </mask>
-    <Pattern color={color || "blue"} mask={`url(#catMask${id})`} />
+    <g mask={`url(#catMask${id})`}>
+      <Pattern color={color || "blue"} />
+      {mood === MOODS.GRUMPY && (
+        <rect x="0" y="0" width="56" height="56" sx={{ fill: "cat.red" }} />
+      )}
+    </g>
     <Face mood={mood} />
+    {cupped && (
+      <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
+    )}
   </svg>
 );
 
-const DraggableCat = ({ id, color, mood }) => {
-  const [{ isDragging }, drag] = useDrag(
+const DraggableCat = ({ id, color, mood, cupped }) => {
+  const [{ isDragging }, drag, preview] = useDrag(
     () => ({
       type: ItemTypes.CAT,
       item: { id, color },
@@ -86,9 +96,14 @@ const DraggableCat = ({ id, color, mood }) => {
     }),
     []
   );
+
+  useEffect(() => preview(getEmptyImage(), { captureDraggingState: true }), [
+    preview,
+  ]);
+
   return (
     <div ref={drag} sx={{ opacity: isDragging ? 0 : 1 }}>
-      <Cat id={id} color={color} mood={mood} />
+      <Cat id={id} color={color} mood={mood} cupped={cupped} />
     </div>
   );
 };
