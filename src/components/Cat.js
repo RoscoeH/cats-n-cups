@@ -14,6 +14,8 @@ export const MOODS = {
   GRUMPY: "grumpy",
 };
 
+const DARK_COLORS = ["black", "chocolate"];
+
 const Body = () => (
   <g>
     <circle cx="16" cy="16" r="16" />
@@ -38,8 +40,11 @@ const Legs = () => (
   </g>
 );
 
-const Face = ({ mood }) => (
-  <g transform="translate(18, 20)" fill="black">
+const Face = ({ color, mood }) => (
+  <g
+    transform="translate(18, 20)"
+    sx={{ fill: DARK_COLORS.includes(color) ? "light" : "dark" }}
+  >
     {mood === MOODS.SLEEPY ? (
       <g>
         <path d="M16.5 1.5C16.7761 1.5 17 1.72386 17 2C17 2.55228 17.4477 3 18 3C18.5523 3 19 2.55228 19 2C19 1.72386 19.2239 1.5 19.5 1.5C19.7761 1.5 20 1.72386 20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 1.72386 16.2239 1.5 16.5 1.5Z" />
@@ -78,7 +83,7 @@ export const Cat = ({ id, color, mood, cupped }) => (
         <rect x="0" y="0" width="56" height="56" sx={{ fill: "cat.red" }} />
       )}
     </g>
-    <Face mood={mood} />
+    <Face color={color} mood={mood} />
     {cupped && (
       <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
     )}
