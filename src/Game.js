@@ -1,3 +1,5 @@
+import { COLORS } from "./components/Pattern";
+
 const DIRECTIONS = [
   [-1, 0],
   [1, 0],
@@ -38,7 +40,14 @@ export class Game {
   createCats() {
     // Create a list of cats
     for (let i = 0; i < this.rows * this.cols; i++) {
-      this.cats.push({ id: i, x: null, y: null, friends: [], mad: false });
+      this.cats.push({
+        id: i,
+        x: null,
+        y: null,
+        color: COLORS[i],
+        friends: [],
+        mad: false,
+      });
     }
 
     // Randomise positions
