@@ -26,7 +26,7 @@ function getItemStyles(initialOffset, currentOffset, isSnapToGrid) {
   };
 }
 
-const CustomDragLayer = (props) => {
+const CustomDragLayer = ({ size }) => {
   const {
     itemType,
     isDragging,
@@ -43,7 +43,7 @@ const CustomDragLayer = (props) => {
   function renderItem() {
     switch (itemType) {
       case ItemTypes.CAT:
-        return <Cat id={item.id} color={item.color} mood="happy" />;
+        return <Cat id={item.id} color={item.color} size={size} mood="happy" />;
       default:
         return null;
     }

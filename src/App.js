@@ -1,55 +1,38 @@
-import logo from "./logo.svg";
-import Cat, { MOODS } from "./components/Cat";
-import Cup from "./components/Cup";
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx } from "theme-ui";
+import useDimensions from "react-use-dimensions";
+
+import Grid from "./components/Grid";
 import Dock from "./components/Dock";
 import CustomDragLayer from "./components/CustomDragLayer";
 
 import { Game } from "./Game";
 import { useState, useEffect, useMemo } from "react";
 
-function range(n) {
-  return [...Array(n).keys()];
-}
+const MAX_SIZE = 128;
 
 function App() {
-  const game = useMemo(() => new Game(3, 3), []);
+  const [ref, { width }] = useDimensions();
+  const game = useMemo(() => new Game(4, 4), []);
   const [numCats, setNumCats] = useState(game.cats);
 
   useEffect(() => game.observe(setNumCats), [game]);
 
   console.log("num cats", numCats);
+
+  const cellSize = Math.min(width / 4, MAX_SIZE);
+  console.log(cellSize);
   return (
-    <div className="App">
-      <CustomDragLayer />
+    <div className="App" ref={ref} sx={{ maxWidth: "720px", margin: "0 auto" }}>
+      <CustomDragLayer size={cellSize} />
       <div>
         <p>{`Moves: ${game.moves}`}</p>
         <p>{`Time: ${game.time}`}</p>
         {game.solved && <p>You win!</p>}
       </div>
-      <div>
-        {range(game.rows).map((row) => (
-          <div key={row} style={{ display: "flex" }}>
-            {range(game.cols).map((col) => {
-              const cat = game.cats.find(
-                (cat) => cat.x === col && cat.y === row
-              );
-              return (
-                <Cup key={row * game.cols + col} x={col} y={row} game={game}>
-                  {cat && (
-                    <Cat
-                      id={cat.id}
-                      color={cat.color}
-                      mood={cat.mad ? MOODS.GRUMPY : MOODS.HAPPY}
-                      cupped
-                    />
-                  )}
-                </Cup>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-      <Dock game={game} />
+      <Grid game={game} size={cellSize} />
+      <Dock game={game} size={cellSize} />
     </div>
   );
 }

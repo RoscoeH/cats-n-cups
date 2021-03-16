@@ -13,7 +13,6 @@ export const MOODS = {
   HAPPY: "happy",
   GRUMPY: "grumpy",
 };
-
 const DARK_COLORS = ["black", "chocolate"];
 
 const Body = () => (
@@ -64,8 +63,8 @@ const Face = ({ color, mood }) => (
   </g>
 );
 
-export const Cat = ({ id, color, mood, cupped }) => (
-  <svg width="56" height="56">
+export const Cat = ({ id, color, mood, cupped, size }) => (
+  <svg width={size || "auto"} height={size || "auto"} viewBox="0 0 56 56">
     <mask id={`catMask${id}`}>
       <g fill="white" transform="translate(12 12)">
         <Body />
@@ -90,11 +89,11 @@ export const Cat = ({ id, color, mood, cupped }) => (
   </svg>
 );
 
-const DraggableCat = ({ id, color, mood, cupped }) => {
+const DraggableCat = ({ id, color, mood, cupped, size }) => {
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
       type: ItemTypes.CAT,
-      item: { id, color },
+      item: { id, color, size },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
@@ -107,8 +106,11 @@ const DraggableCat = ({ id, color, mood, cupped }) => {
   ]);
 
   return (
-    <div ref={drag} sx={{ opacity: isDragging ? 0 : 1 }}>
-      <Cat id={id} color={color} mood={mood} cupped={cupped} />
+    <div
+      ref={drag}
+      sx={{ opacity: isDragging ? 0 : 1, display: "inline-block" }}
+    >
+      <Cat id={id} color={color} mood={mood} cupped={cupped} size={size} />
     </div>
   );
 };
