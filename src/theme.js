@@ -1,15 +1,21 @@
+import "typeface-nunito";
+
 export default {
   fonts: {
-    body: "system-ui, sans-serif",
-    heading: '"Avenir Next", sans-serif',
+    body: '"Nunito", sans-serif',
+    heading: '"Nunito", sans-serif',
     monospace: "Menlo, monospace",
   },
+  fontSizes: [16, 24, 48, 64, 96],
+  space: [0, 4, 8, 16, 32, 64, 128, 246, 512],
+  sizes: [0, 4, 8, 16, 32, 64, 128, 246, 512],
   colors: {
     text: "#000",
     background: "#fff",
     primary: "#33e",
     dark: "#000",
     light: "#fff",
+    border: "rgba(0, 0, 0, 0.15)",
     cup: "#5C606F",
     cat: {
       black: "#333333",
@@ -22,6 +28,12 @@ export default {
       chocolate: "#83692C",
       brown: "#B59978",
       red: "#FF5353",
+    },
+  },
+  styles: {
+    root: {
+      fontFamily: "body",
+      fontWeight: "body",
     },
   },
 };

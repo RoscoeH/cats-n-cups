@@ -24,10 +24,11 @@ const Dock = ({ game, size }) => {
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
-        border: "1px dashed",
-        borderColor: "dark",
+        border: "1px solid",
+        borderColor: "border",
         borderRadius: 16,
         minHeight: "128px",
+        m: "16px",
       }}
     >
       {game.cats.map((cat) =>
