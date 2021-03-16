@@ -5,6 +5,7 @@ import useDimensions from "react-use-dimensions";
 
 import Grid from "./components/Grid";
 import Dock from "./components/Dock";
+import Header from "./components/Header";
 import CustomDragLayer from "./components/CustomDragLayer";
 
 import { Game } from "./Game";
@@ -14,7 +15,7 @@ const MAX_SIZE = 128;
 
 function App() {
   const [ref, { width }] = useDimensions();
-  const game = useMemo(() => new Game(4, 4), []);
+  const game = useMemo(() => new Game(3, 3), []);
   const [numCats, setNumCats] = useState(game.cats);
 
   useEffect(() => game.observe(setNumCats), [game]);
@@ -26,11 +27,7 @@ function App() {
   return (
     <div className="App" ref={ref} sx={{ maxWidth: "720px", margin: "0 auto" }}>
       <CustomDragLayer size={cellSize} />
-      <div>
-        <p>{`Moves: ${game.moves}`}</p>
-        <p>{`Time: ${game.time}`}</p>
-        {game.solved && <p>You win!</p>}
-      </div>
+      <Header game={game} />
       <Grid game={game} size={cellSize} />
       <Dock game={game} size={cellSize} />
     </div>
