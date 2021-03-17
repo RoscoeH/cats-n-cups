@@ -1,11 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDrag } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
+import { motion } from "framer-motion";
 
 import { ItemTypes } from "../constants";
+import { shuffle } from "../utils";
 import Pattern from "./Pattern";
 
 export const MOODS = {
@@ -16,7 +18,47 @@ export const MOODS = {
 };
 const DARK_COLORS = ["black", "chocolate"];
 
-const Body = () => (
+const Eye = ({ id, r, delay, intervals, ...props }) => {
+  console.log(id, delay);
+  const [open, setOpen] = useState(true);
+  useEffect(() => {
+    let timers = [];
+    setTimeout(() => {
+      timers = intervals.map((seconds) =>
+        setInterval(() => {
+          setOpen(false);
+          setTimeout(() => setOpen(true), 100);
+        }, seconds * 1000)
+      );
+    }, delay);
+
+    return () => timers.forEach(clearInterval);
+  }, []);
+
+  const variants = {
+    open: { translateY: -r * 2 },
+    closed: { translateY: 0 },
+  };
+  return (
+    <g>
+      <mask id={`eyeMask${id}`}>
+        <circle r={r} fill="white" {...props} />
+        <motion.circle
+          r={r}
+          fill="black"
+          initial="open"
+          transition={{ duration: 0.05 }}
+          animate={open ? "open" : "closed"}
+          variants={variants}
+          {...props}
+        />
+      </mask>
+      <circle r={r} {...props} mask={`url(#eyeMask${id})`} />
+    </g>
+  );
+};
+
+const Body = (por) => (
   <g>
     <circle cx="16" cy="16" r="16" />
     <path d="M0 16V0L16 16H0Z" />
@@ -40,29 +82,49 @@ const Legs = () => (
   </g>
 );
 
-const Face = ({ color, mood }) => (
-  <g
-    transform="translate(18, 20)"
-    sx={{ fill: DARK_COLORS.includes(color) ? "light" : "dark" }}
-  >
-    {mood === MOODS.SLEEPY ? (
-      <g>
-        <path d="M16.5 1.5C16.7761 1.5 17 1.72386 17 2C17 2.55228 17.4477 3 18 3C18.5523 3 19 2.55228 19 2C19 1.72386 19.2239 1.5 19.5 1.5C19.7761 1.5 20 1.72386 20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 1.72386 16.2239 1.5 16.5 1.5Z" />
-        <path d="M0.5 1.5C0.776142 1.5 1 1.72386 1 2C1 2.55228 1.44772 3 2 3C2.55228 3 3 2.55228 3 2C3 1.72386 3.22386 1.5 3.5 1.5C3.77614 1.5 4 1.72386 4 2C4 3.10457 3.10457 4 2 4C0.89543 4 0 3.10457 0 2C0 1.72386 0.223858 1.5 0.5 1.5Z" />
-        <circle cx="10" cy="6" r="1" />
-      </g>
-    ) : (
-      <g>
-        <circle cx="2" cy="2" r="2" />
-        <circle cx="18" cy="2" r="2" />
-        <path
-          d="M13 2C12.4477 2 12 2.44772 12 3C12 3.72864 11.7367 4.20164 11.3981 4.50259C11.0412 4.8199 10.5369 5 10 5C9.46307 5 8.95883 4.8199 8.60186 4.50259C8.2633 4.20164 8 3.72864 8 3C8 2.44772 7.55228 2 7 2C6.44772 2 6 2.44772 6 3C6 4.27136 6.4867 5.29836 7.27314 5.99741C8.04117 6.6801 9.03693 7 10 7C10.9631 7 11.9588 6.6801 12.7269 5.99741C13.5133 5.29836 14 4.27136 14 3C14 2.44772 13.5523 2 13 2Z"
-          transform={mood === MOODS.GRUMPY ? "rotate(180 10 4)" : ""}
-        />
-      </g>
-    )}
-  </g>
-);
+const EYE_INTERVALS = [7, 13, 17, 19, 23];
+const Face = ({ id, color, mood }) => {
+  const [delay] = useState(Math.round(Math.random() * 1000));
+  const [intervals] = useState(shuffle(EYE_INTERVALS).slice(1));
+  useEffect(() => console.log(id, delay), []);
+  return (
+    <g
+      transform="translate(18, 20)"
+      sx={{ fill: DARK_COLORS.includes(color) ? "light" : "dark" }}
+    >
+      {mood === MOODS.SLEEPY ? (
+        <g>
+          <path d="M16.5 1.5C16.7761 1.5 17 1.72386 17 2C17 2.55228 17.4477 3 18 3C18.5523 3 19 2.55228 19 2C19 1.72386 19.2239 1.5 19.5 1.5C19.7761 1.5 20 1.72386 20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 1.72386 16.2239 1.5 16.5 1.5Z" />
+          <path d="M0.5 1.5C0.776142 1.5 1 1.72386 1 2C1 2.55228 1.44772 3 2 3C2.55228 3 3 2.55228 3 2C3 1.72386 3.22386 1.5 3.5 1.5C3.77614 1.5 4 1.72386 4 2C4 3.10457 3.10457 4 2 4C0.89543 4 0 3.10457 0 2C0 1.72386 0.223858 1.5 0.5 1.5Z" />
+          <circle cx="10" cy="6" r="1" />
+        </g>
+      ) : (
+        <g>
+          <Eye
+            id={`${id}${1}`}
+            delay={delay}
+            intervals={intervals}
+            cx="2"
+            cy="2"
+            r="2"
+          />
+          <Eye
+            id={`${id}${2}`}
+            delay={delay}
+            intervals={intervals}
+            cx="18"
+            cy="2"
+            r="2"
+          />
+          <path
+            d="M13 2C12.4477 2 12 2.44772 12 3C12 3.72864 11.7367 4.20164 11.3981 4.50259C11.0412 4.8199 10.5369 5 10 5C9.46307 5 8.95883 4.8199 8.60186 4.50259C8.2633 4.20164 8 3.72864 8 3C8 2.44772 7.55228 2 7 2C6.44772 2 6 2.44772 6 3C6 4.27136 6.4867 5.29836 7.27314 5.99741C8.04117 6.6801 9.03693 7 10 7C10.9631 7 11.9588 6.6801 12.7269 5.99741C13.5133 5.29836 14 4.27136 14 3C14 2.44772 13.5523 2 13 2Z"
+            transform={mood === MOODS.GRUMPY ? "rotate(180 10 4)" : ""}
+          />
+        </g>
+      )}
+    </g>
+  );
+};
 
 export const Cat = ({ id, color, mood, cupped, size }) => (
   <svg width={size || "auto"} height={size || "auto"} viewBox="0 0 56 56">
@@ -83,7 +145,7 @@ export const Cat = ({ id, color, mood, cupped, size }) => (
         <rect x="0" y="0" width="56" height="56" sx={{ fill: "cat.red" }} />
       )}
     </g>
-    <Face color={color} mood={mood} />
+    <Face id={id} color={color} mood={mood} />
     {cupped && (
       <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
     )}

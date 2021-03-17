@@ -1,4 +1,5 @@
 import { COLORS } from "./components/Pattern";
+import { shuffle } from "./utils";
 
 const DIRECTIONS = [
   [-1, 0],
@@ -6,26 +7,6 @@ const DIRECTIONS = [
   [0, -1],
   [0, 1],
 ];
-
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
 
 export class Game {
   constructor(rows, cols) {
