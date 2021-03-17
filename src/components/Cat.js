@@ -12,6 +12,7 @@ export const MOODS = {
   SLEEPY: "sleepy",
   HAPPY: "happy",
   GRUMPY: "grumpy",
+  SITTING: "sitting",
 };
 const DARK_COLORS = ["black", "chocolate"];
 
@@ -68,7 +69,7 @@ export const Cat = ({ id, color, mood, cupped, size }) => (
     <mask id={`catMask${id}`}>
       <g fill="white" transform="translate(12 12)">
         <Body />
-        {mood !== MOODS.SLEEPY && (
+        {(mood === MOODS.HAPPY || mood === MOODS.GRUMPY) && (
           <g>
             <Legs />
             <Tail />

@@ -38,7 +38,7 @@ const Dock = ({ game, size }) => {
               key={cat.id}
               id={cat.id}
               color={cat.color}
-              mood={MOODS.SLEEPY}
+              mood={MOODS.SITTING}
               size={size}
             />
           </div>
