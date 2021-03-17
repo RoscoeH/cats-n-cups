@@ -7,6 +7,14 @@ import Cat, { MOODS } from "../components/Cat";
 export default {
   title: "Components/Cat",
   component: Cat,
+  argTypes: {
+    mood: {
+      control: {
+        type: "select",
+        options: MOODS,
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <DndProvider backend={HTML5Backend}>
