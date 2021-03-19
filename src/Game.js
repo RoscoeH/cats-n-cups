@@ -1,5 +1,6 @@
 import { COLORS } from "./components/Pattern";
-import { shuffle } from "./utils";
+import { range, shuffle } from "./utils";
+import Observable from "./observable";
 
 const DIRECTIONS = [
   [-1, 0],
@@ -9,130 +10,122 @@ const DIRECTIONS = [
 ];
 
 export class Game {
+  cats = [];
+  startTime = null;
+  timer = null;
+  grid = null;
+  time = new Observable("0s");
+  moves = new Observable(0);
+  solved = new Observable(false);
+
   constructor(rows, cols) {
     this.rows = rows;
     this.cols = cols;
-    this.cats = [];
-    this.moves = 0;
-    this.startTime = null;
-    this.time = "0s";
-    this.timer = null;
-    this.solved = false;
 
-    this.observers = [];
-
+    this.createGrid();
     this.createCats();
   }
 
+  createGrid() {
+    this.grid = range(this.rows).map(() =>
+      range(this.cols).map(() => new Observable(null))
+    );
+  }
+
+  createCat(x, y, id, color) {
+    return new Observable({
+      id,
+      color: color,
+      friends: DIRECTIONS.map(([dX, dY]) => {
+        const adjacentX = x + dX;
+        const adjacentY = y + dY;
+        return adjacentX >= 0 &&
+          adjacentX < this.cols &&
+          adjacentY >= 0 &&
+          adjacentY < this.rows
+          ? adjacentY * this.cols + adjacentX
+          : null;
+      }).filter((id) => id !== null),
+      docked: true,
+      mad: false,
+    });
+  }
+
   createCats() {
-    // Create a list of cats
-    for (let i = 0; i < this.rows * this.cols; i++) {
-      this.cats.push({
-        id: i,
-        x: null,
-        y: null,
-        color: COLORS[i],
-        friends: [],
-        mad: false,
-      });
-    }
+    const colors = shuffle(COLORS.slice());
 
-    // Randomise positions
-    shuffle(this.cats);
+    range(this.rows).forEach((row) =>
+      range(this.cols).forEach((col) => {
+        const id = row * this.cols + col;
+        this.cats.push(this.createCat(col, row, id, colors[id]));
+      })
+    );
 
-    // Put the cats into a temporary grid
-    const rows = [];
-    for (let y = 0; y < this.rows; y++) {
-      const row = [];
-      for (let x = 0; x < this.cols; x++) {
-        row.push(this.cats[y * this.cols + x]);
-      }
-      rows.push(row);
-    }
-
-    // Iterate over the grid and assign adjact cats as friends
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
-        const cat = rows[y][x];
-
-        // Above
-        if (y > 0) {
-          cat.friends.push(rows[y - 1][x].id);
-        }
-
-        // Below
-        if (y < this.rows - 1) {
-          cat.friends.push(rows[y + 1][x].id);
-        }
-
-        // Left
-        if (x > 0) {
-          cat.friends.push(rows[y][x - 1].id);
-        }
-
-        // Right
-        if (x < this.cols - 1) {
-          cat.friends.push(rows[y][x + 1].id);
-        }
-      }
-    }
-
-    // Shuffle once again
     shuffle(this.cats);
   }
 
-  observe(o) {
-    this.observers.push(o);
-    this.emitChange();
-    return () => {
-      this.observers = this.observers.filter((t) => t !== o);
-    };
+  incrementMoves() {
+    this.moves.set(this.moves.get() + 1);
   }
 
-  returnCat(id) {
-    console.log("return cat");
-    const cat = this.cats.find((cat) => cat.id === id);
-    cat.x = null;
-    cat.y = null;
-
-    this.moves++;
-    this.setMoods();
-    this.emitChange();
-  }
-
-  moveCat(id, toX, toY) {
-    // Remove existing cat
-    const existingCat = this.cats.find((cat) => cat.x === toX && cat.y === toY);
-    if (existingCat) {
-      existingCat.x = null;
-      existingCat.y = null;
-    }
-
-    const cat = this.cats.find((cat) => cat.id === id);
-    cat.x = toX;
-    cat.y = toY;
-
-    this.moves++;
-
+  startTimer() {
     if (this.startTime === null) {
       this.startTime = Date.now();
       this.timer = setInterval(() => this.calculateTime(), 1000);
     }
+  }
 
+  returnCat(fromPos) {
+    const cell = this.grid[fromPos.y][fromPos.x];
+    const cat = cell.get();
+
+    if (cat) {
+      cat.set({ ...cat.get(), docked: true, mad: false });
+      cell.set(null);
+
+      this.incrementMoves();
+      this.setMoods();
+    }
+  }
+
+  moveCat(id, fromPos, toPos) {
+    // Remove target cat from dock
+    const cat = this.cats.find((cat) => cat.get().id === id);
+    cat.set({ ...cat.get(), docked: false });
+
+    // Remove existing cat from cell
+    const toCell = this.grid[toPos.y][toPos.x];
+    if (toCell.get()) {
+      const existingCat = toCell.get();
+      if (existingCat.get().id !== id) {
+        existingCat.set({ ...existingCat.get(), docked: true });
+      }
+    }
+
+    // Place target cat in cell
+    toCell.set(cat);
+
+    if (fromPos && (fromPos.x !== toPos.x || fromPos.y !== toPos.y)) {
+      const fromCell = this.grid[fromPos.y][fromPos.x];
+      fromCell.set(null);
+    }
+
+    this.incrementMoves();
+    this.startTimer();
     this.setMoods();
     this.checkSolved();
 
-    this.emitChange();
+    console.log(this);
   }
 
   checkSolved() {
     // Check every cat has a position and are happy
     if (
       this.cats.every(
-        (cat) => cat.x !== null && cat.y !== null && cat.mad === false
+        (cat) => cat.get().docked === false && cat.get().mad === false
       )
     ) {
-      this.solved = true;
+      this.solved.set(true);
       clearInterval(this.timer);
     }
   }
@@ -141,72 +134,45 @@ export class Game {
     const totalSeconds = Math.floor((Date.now() - this.startTime) / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    console.log(totalSeconds, minutes, seconds);
-
-    this.time = `${seconds}s`;
+    let time = `${seconds}s`;
 
     if (minutes > 0) {
-      this.time = `${minutes}m ${this.time}`;
+      time = `${minutes}m ${time}`;
     }
-
-    this.emitChange();
+    this.time.set(time);
   }
 
   setMoods() {
-    // Get the cats on the board
-    const catsInCups = this.cats.filter(
-      (cat) => cat.x !== null && cat.y !== null
-    );
+    this.grid.forEach((row, y) =>
+      row.forEach((cell, x) => {
+        const cat = cell.get();
+        if (cat) {
+          let mad = false;
+          DIRECTIONS.forEach((dir) => {
+            const [dX, dY] = dir;
+            const adjacentX = x + dX;
+            const adjacentY = y + dY;
 
-    catsInCups.forEach((cat) => {
-      // Reset the mood of the cat
-      cat.mad = false;
+            if (
+              adjacentX >= 0 &&
+              adjacentX < this.cols &&
+              adjacentY >= 0 &&
+              adjacentY < this.rows
+            ) {
+              const adjacentCat = this.grid[adjacentY][adjacentX].get();
 
-      console.log("checking cat", cat.id);
-
-      // Look for a cat in each direction
-      DIRECTIONS.forEach((dir) => {
-        const [dX, dY] = dir;
-        const adjacentX = cat.x + dX;
-        const adjacentY = cat.y + dY;
-        console.log("adj", adjacentX, adjacentY);
-        if (
-          adjacentX >= 0 &&
-          adjacentX < this.cols &&
-          adjacentY >= 0 &&
-          adjacentY < this.rows
-        ) {
-          console.log("checking at pos", adjacentX, adjacentY);
-          const adjacentCat = catsInCups.find(
-            (cat) => cat.x === adjacentX && cat.y === adjacentY
-          );
-
-          console.log("adjCat", adjacentCat);
-
-          // If we find a cat that is not in our friends list
-          if (adjacentCat && !cat.friends.includes(adjacentCat.id)) {
-            adjacentCat.mad = true;
-            cat.mad = true;
-          }
+              // If we find a cat that is not in our friends list
+              if (
+                adjacentCat &&
+                !cat.get().friends.includes(adjacentCat.get().id)
+              ) {
+                mad = true;
+              }
+            }
+          });
+          cat.set({ ...cat.get(), mad });
         }
-      });
-    });
-  }
-
-  // canMoveKnight(toX, toY) {
-  //   const [x, y] = this.knightPosition;
-  //   const dx = toX - x;
-  //   const dy = toY - y;
-  //   return (
-  //     (Math.abs(dx) === 2 && Math.abs(dy) === 1) ||
-  //     (Math.abs(dx) === 1 && Math.abs(dy) === 2)
-  //   );
-  // }
-
-  emitChange() {
-    console.log(">emitChange");
-    const cats = this.cats;
-    console.log("cats", this.cats);
-    this.observers.forEach((o) => o && o(Math.random()));
+      })
+    );
   }
 }

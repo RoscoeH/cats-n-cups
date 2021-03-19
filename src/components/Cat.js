@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 import { ItemTypes } from "../constants";
 import { shuffle } from "../utils";
 import Pattern from "./Pattern";
+import { useObservable } from "../hooks/useObservable";
+import { useGame } from "../hooks/useGame";
 
 export const MOODS = {
   SLEEPY: "sleepy",
@@ -19,21 +21,29 @@ export const MOODS = {
 const DARK_COLORS = ["black", "chocolate"];
 
 const Eye = ({ id, r, delay, intervals, ...props }) => {
-  console.log(id, delay);
-  const [open, setOpen] = useState(true);
-  useEffect(() => {
-    let timers = [];
-    setTimeout(() => {
-      timers = intervals.map((seconds) =>
-        setInterval(() => {
-          setOpen(false);
-          setTimeout(() => setOpen(true), 100);
-        }, seconds * 1000)
-      );
-    }, delay);
+  // const [open, setOpen] = useState(true);
+  // useEffect(() => {
+  //   const ints = [];
+  //   const timeouts = [];
 
-    return () => timers.forEach(clearInterval);
-  }, []);
+  //   const delayTimeout = setTimeout(() => {
+  //     intervals.forEach((seconds) => {
+  //       const closeInterval = setInterval(() => {
+  //         setOpen(false);
+  //         const openTimeout = setTimeout(() => setOpen(true), 100);
+  //         timeouts.push(openTimeout);
+  //       }, seconds * 1000);
+  //       ints.push(closeInterval);
+  //     });
+  //   }, delay);
+
+  //   timeouts.push(delayTimeout);
+
+  //   // return () => {
+  //   //   ints.forEach(clearInterval);
+  //   //   timeouts.forEach(clearTimeout);
+  //   // };
+  // });
 
   const variants = {
     open: { translateY: -r * 2 },
@@ -48,7 +58,7 @@ const Eye = ({ id, r, delay, intervals, ...props }) => {
           fill="black"
           initial="open"
           transition={{ duration: 0.05 }}
-          animate={open ? "open" : "closed"}
+          // animate={open ? "open" : "closed"}
           variants={variants}
           {...props}
         />
@@ -58,7 +68,7 @@ const Eye = ({ id, r, delay, intervals, ...props }) => {
   );
 };
 
-const Body = (por) => (
+const Body = () => (
   <g>
     <circle cx="16" cy="16" r="16" />
     <path d="M0 16V0L16 16H0Z" />
@@ -86,7 +96,6 @@ const EYE_INTERVALS = [7, 13, 17, 19, 23];
 const Face = ({ id, color, mood }) => {
   const [delay] = useState(Math.round(Math.random() * 1000));
   const [intervals] = useState(shuffle(EYE_INTERVALS).slice(1));
-  useEffect(() => console.log(id, delay), []);
   return (
     <g
       transform="translate(18, 20)"
@@ -127,7 +136,7 @@ const Face = ({ id, color, mood }) => {
 };
 
 export const Cat = ({ id, color, mood, cupped, size }) => (
-  <svg width={size || "auto"} height={size || "auto"} viewBox="0 0 56 56">
+  <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
     <mask id={`catMask${id}`}>
       <g fill="white" transform="translate(12 12)">
         <Body />
@@ -142,7 +151,7 @@ export const Cat = ({ id, color, mood, cupped, size }) => (
     <g mask={`url(#catMask${id})`}>
       <Pattern color={color || "blue"} />
       {mood === MOODS.GRUMPY && (
-        <rect x="0" y="0" width="56" height="56" sx={{ fill: "cat.red" }} />
+        <rect x="0" y="0" width="56" height="56" sx={{ fill: "angry" }} />
       )}
     </g>
     <Face id={id} color={color} mood={mood} />
@@ -152,11 +161,19 @@ export const Cat = ({ id, color, mood, cupped, size }) => (
   </svg>
 );
 
-const DraggableCat = ({ id, color, mood, cupped, size }) => {
+const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
+  const game = useGame();
+  const [cat] = useObservable(game.cats.find((cat) => cat.get().id === id));
+
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
       type: ItemTypes.CAT,
-      item: { id, color, size },
+      item: {
+        id,
+        color,
+        size,
+        pos: typeof x !== "undefined" && typeof y !== "undefined" && { x, y },
+      },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
@@ -168,13 +185,24 @@ const DraggableCat = ({ id, color, mood, cupped, size }) => {
     preview,
   ]);
 
-  return (
+  return cat.docked || cupped ? (
     <div
       ref={drag}
-      sx={{ opacity: isDragging ? 0 : 1, display: "inline-block" }}
+      sx={{
+        opacity: isDragging ? 0 : 1,
+        display: "inline-block",
+      }}
     >
-      <Cat id={id} color={color} mood={mood} cupped={cupped} size={size} />
+      <Cat
+        id={id}
+        color={color}
+        mood={(cat.mad && MOODS.GRUMPY) || mood}
+        cupped={cupped}
+        size={size}
+      />
     </div>
+  ) : (
+    <div sx={{ width: `${size}px`, height: `${size}px` }} />
   );
 };
 

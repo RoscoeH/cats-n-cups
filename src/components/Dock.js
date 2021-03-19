@@ -5,12 +5,17 @@ import { useDrop } from "react-dnd";
 
 import { ItemTypes } from "../constants";
 import Cat, { MOODS } from "./Cat";
+import { useGame } from "../hooks/useGame";
 
-const Dock = ({ game, size }) => {
-  const [{ canDrop }, drop] = useDrop(() => ({
+const Dock = ({ size }) => {
+  const game = useGame();
+
+  const [canDrop, drop] = useDrop(() => ({
     accept: ItemTypes.CAT,
     drop: (item) => {
-      game.returnCat(item.id);
+      if (item.pos) {
+        game.returnCat(item.pos);
+      }
     },
     collect: (monitor) => ({
       canDrop: !!monitor.canDrop() && !monitor.isOver(),
@@ -25,27 +30,26 @@ const Dock = ({ game, size }) => {
         flexWrap: "wrap",
         justifyContent: "center",
         border: "1px solid",
-        borderColor: "border",
+        borderColor: canDrop ? "dark" : "border",
         borderRadius: 16,
         minHeight: "128px",
         m: "16px",
       }}
     >
-      {game.cats.map((cat) =>
-        cat.x == null && cat.y == null ? (
-          <div sx={{ margin: "-8px", display: "inline-block" }}>
-            <Cat
-              key={cat.id}
-              id={cat.id}
-              color={cat.color}
-              mood={MOODS.SITTING}
-              size={size}
-            />
+      {game.cats.map((cat) => {
+        const { id, color } = cat.get();
+        return (
+          <div
+            key={id}
+            sx={{
+              margin: "-8px",
+              display: "inline-block",
+            }}
+          >
+            <Cat id={id} color={color} mood={MOODS.SITTING} size={size} />
           </div>
-        ) : (
-          <div key={cat.id} sx={{ width: "64px", height: "64px" }} />
-        )
-      )}
+        );
+      })}
     </div>
   );
 };

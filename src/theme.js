@@ -17,6 +17,7 @@ export default {
     light: "#fff",
     border: "rgba(0, 0, 0, 0.15)",
     cup: "#5C606F",
+    angry: "#FF5353",
     cat: {
       black: "#333333",
       blue: "#8C9399",
@@ -27,7 +28,6 @@ export default {
       cinnamon: "#C18A2D",
       chocolate: "#83692C",
       brown: "#B59978",
-      red: "#FF5353",
     },
   },
   styles: {

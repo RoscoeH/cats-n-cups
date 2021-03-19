@@ -17,3 +17,7 @@ export function shuffle(array) {
 
   return array;
 }
+
+export function range(n) {
+  return [...Array(n).keys()];
+}
