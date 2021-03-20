@@ -40,6 +40,7 @@ const CustomDragLayer = ({ size }) => {
     currentOffset: monitor.getSourceClientOffset(),
     isDragging: monitor.isDragging(),
   }));
+
   function renderItem() {
     switch (itemType) {
       case ItemTypes.CAT:

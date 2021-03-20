@@ -114,8 +114,6 @@ export class Game {
     this.startTimer();
     this.setMoods();
     this.checkSolved();
-
-    console.log(this);
   }
 
   checkSolved() {
