@@ -16,6 +16,7 @@ export default {
     dark: "#000",
     light: "#fff",
     border: "rgba(0, 0, 0, 0.15)",
+    hover: "rgba(0,0,0,0.8)",
     cup: "#5C606F",
     angry: "#FF5353",
     cat: {
@@ -34,6 +35,9 @@ export default {
     root: {
       fontFamily: "body",
       fontWeight: "body",
+    },
+    button: {
+      fontFamily: "body",
     },
   },
 };
