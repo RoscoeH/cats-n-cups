@@ -140,7 +140,7 @@ export class Game {
     this.time.set(time);
   }
 
-  setMoods() {
+  setMoods(ignoredId) {
     this.grid.forEach((row, y) =>
       row.forEach((cell, x) => {
         const cat = cell.get();
@@ -162,6 +162,7 @@ export class Game {
               // If we find a cat that is not in our friends list
               if (
                 adjacentCat &&
+                adjacentCat.get().id !== ignoredId &&
                 !cat.get().friends.includes(adjacentCat.get().id)
               ) {
                 mad = true;

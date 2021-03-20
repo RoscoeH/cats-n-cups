@@ -41,6 +41,7 @@ const Cup = ({ x, y, size }) => {
             mood={MOODS.HAPPY}
             x={x}
             y={y}
+            size={size}
             cupped
           />
         )}
