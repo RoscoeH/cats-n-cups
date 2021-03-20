@@ -165,21 +165,23 @@ const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
   const game = useGame();
   const [cat] = useObservable(game.cats.find((cat) => cat.get().id === id));
 
-  const [{ isDragging }, drag, preview] = useDrag(
-    () => ({
+  const [{ isDragging }, drag, preview] = useDrag(() => {
+    return {
       type: ItemTypes.CAT,
-      item: {
-        id,
-        color,
-        size,
-        pos: typeof x !== "undefined" && typeof y !== "undefined" && { x, y },
+      item: () => {
+        game.setMoods(id);
+        return {
+          id,
+          color,
+          size,
+          pos: typeof x !== "undefined" && typeof y !== "undefined" && { x, y },
+        };
       },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
-    }),
-    []
-  );
+    };
+  }, []);
 
   useEffect(() => preview(getEmptyImage(), { captureDraggingState: true }), [
     preview,
