@@ -87,9 +87,10 @@ const Legs = ({ visible }) => (
   <AnimatePresence>
     {visible && (
       <motion.g
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        key="child"
+        initial={{ translateY: -16 }}
+        animate={{ translateY: 0 }}
+        exit={{ translateY: -16 }}
       >
         <g transform="translate(4 24)">
           <path d="M10 4H6V10C6 11.1046 6.89543 12 8 12V12C9.10457 12 10 11.1046 10 10V4Z" />
@@ -137,27 +138,30 @@ const Face = ({ id, color, grumpy }) => {
   );
 };
 
-export const Cat = ({ id, color, grumpy, legs, tail, cupped, size }) => (
-  <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
-    <mask id={`catMask${id}`}>
-      <g fill="white" transform="translate(12 12)">
-        <Body />
-        <Legs visible={legs} />
-        {tail && <Tail />}
+export const Cat = ({ id, color, grumpy, legs, tail, cupped, size }) => {
+  useEffect(() => console.log("mount cat"), []);
+  return (
+    <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
+      <mask id={`catMask${id}`}>
+        <g fill="white" transform="translate(12 12)">
+          <Body />
+          <Legs visible={legs} />
+          {tail && <Tail />}
+        </g>
+      </mask>
+      <g mask={`url(#catMask${id})`}>
+        <Pattern color={color || "blue"} />
+        {grumpy && (
+          <rect x="0" y="0" width="56" height="56" sx={{ fill: "angry" }} />
+        )}
       </g>
-    </mask>
-    <g mask={`url(#catMask${id})`}>
-      <Pattern color={color || "blue"} />
-      {grumpy && (
-        <rect x="0" y="0" width="56" height="56" sx={{ fill: "angry" }} />
+      <Face id={id} color={color} grumpy={grumpy} />
+      {cupped && (
+        <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
       )}
-    </g>
-    <Face id={id} color={color} grumpy={grumpy} />
-    {cupped && (
-      <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
-    )}
-  </svg>
-);
+    </svg>
+  );
+};
 
 const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
   const game = useGame();

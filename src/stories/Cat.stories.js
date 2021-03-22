@@ -8,11 +8,7 @@ export default {
   title: "Components/Cat",
   component: Cat,
   decorators: [
-    (Story) => (
-      <DndProvider backend={HTML5Backend}>
-        <Story />
-      </DndProvider>
-    ),
+    (Story) => <DndProvider backend={HTML5Backend}>{Story()}</DndProvider>,
   ],
 };
 
