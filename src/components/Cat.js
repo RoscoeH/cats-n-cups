@@ -8,9 +8,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { ItemTypes } from "../constants";
 import { shuffle } from "../utils";
-import Pattern from "./Pattern";
 import { useObservable } from "../hooks/useObservable";
 import { useGame } from "../hooks/useGame";
+import theme from "../theme";
 
 export const MOODS = {
   SLEEPY: "sleepy",
@@ -126,7 +126,7 @@ const Legs = ({ visible }) => (
 );
 
 const EYE_INTERVALS = [7, 13, 17, 19, 23];
-const Face = ({ id, color, grumpy }) => {
+const Face = ({ id, color, mad }) => {
   const [delay] = useState(Math.round(Math.random() * 1000));
   const [intervals] = useState(shuffle(EYE_INTERVALS).slice(1));
   return (
@@ -151,16 +151,16 @@ const Face = ({ id, color, grumpy }) => {
           cy="2"
           r="2"
         />
-        <path
+        <motion.path
           d="M13 2C12.4477 2 12 2.44772 12 3C12 3.72864 11.7367 4.20164 11.3981 4.50259C11.0412 4.8199 10.5369 5 10 5C9.46307 5 8.95883 4.8199 8.60186 4.50259C8.2633 4.20164 8 3.72864 8 3C8 2.44772 7.55228 2 7 2C6.44772 2 6 2.44772 6 3C6 4.27136 6.4867 5.29836 7.27314 5.99741C8.04117 6.6801 9.03693 7 10 7C10.9631 7 11.9588 6.6801 12.7269 5.99741C13.5133 5.29836 14 4.27136 14 3C14 2.44772 13.5523 2 13 2Z"
-          transform={grumpy ? "rotate(180 10 4)" : ""}
+          animate={{ rotateX: mad ? 180 : 0 }}
         />
       </g>
     </g>
   );
 };
 
-export const Cat = ({ id, color, grumpy, legs, tail, cupped, size }) => {
+export const Cat = ({ id, color, mad, legs, tail, cupped, size }) => {
   useEffect(() => console.log("mount cat"), []);
   return (
     <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
@@ -172,12 +172,17 @@ export const Cat = ({ id, color, grumpy, legs, tail, cupped, size }) => {
         </g>
       </mask>
       <g mask={`url(#catMask${id})`}>
-        <Pattern color={color || "blue"} />
-        {grumpy && (
-          <rect x="0" y="0" width="56" height="56" sx={{ fill: "angry" }} />
-        )}
+        <motion.rect
+          x="0"
+          y="0"
+          width="56"
+          height="56"
+          animate={{
+            fill: mad ? theme.colors.angry : theme.colors.cat[color || "blue"],
+          }}
+        />
       </g>
-      <Face id={id} color={color} grumpy={grumpy} />
+      <Face id={id} color={color} mad={mad} />
       {cupped && (
         <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
       )}
