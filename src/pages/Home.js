@@ -17,10 +17,10 @@ const Home = () => {
       >
         <div sx={{ display: "flex", justifyContent: "center" }}>
           <Cup>
-            <Cat id="1" color="blue" tail cupped />
+            <Cat id="1" color="blue" tail />
           </Cup>
           <Cup>
-            <Cat id="2" color="brown" mad tail cupped />
+            <Cat id="2" color="brown" mad tail />
           </Cup>
         </div>
         <Cat id="3" color="amber" />

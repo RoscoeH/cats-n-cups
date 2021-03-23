@@ -150,7 +150,7 @@ const Face = ({ id, color, mad }) => {
   );
 };
 
-export const Cat = ({ id, color, mad, legs, tail, cupped, size }) => {
+export const Cat = ({ id, color, mad, legs, tail, size }) => {
   const bodyColor = theme.colors.cat[color || "blue"];
   return (
     <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
@@ -174,16 +174,14 @@ export const Cat = ({ id, color, mad, legs, tail, cupped, size }) => {
         />
       </g>
       <Face id={id} color={color} mad={mad} />
-      {cupped && (
-        <path d="m12 28 h32 v6 A16 16 0 0 1 12 34 z" sx={{ fill: "cup" }} />
-      )}
     </svg>
   );
 };
 
-const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
+const DraggableCat = ({ id, color, mood, size, x, y }) => {
   const game = useGame();
   const [cat] = useObservable(game.cats.find((cat) => cat.get().id === id));
+  const hasPosition = typeof x !== "undefined" && typeof y !== "undefined";
 
   const [{ isDragging }, drag, preview] = useDrag(() => {
     return {
@@ -194,20 +192,20 @@ const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
           id,
           color,
           size,
-          pos: typeof x !== "undefined" && typeof y !== "undefined" && { x, y },
+          pos: hasPosition && { x, y },
         };
       },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
     };
-  }, [cat]);
+  }, [cat, x, y]);
 
   useEffect(() => preview(getEmptyImage(), { captureDraggingState: true }), [
     preview,
   ]);
 
-  return cat.docked || cupped ? (
+  return cat.docked || hasPosition ? (
     <div
       ref={drag}
       sx={{
@@ -221,7 +219,6 @@ const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
         mad={cat.mad || mood === MOODS.GRUMPY}
         tail={mood !== MOODS.SITTING}
         legs={mood !== MOODS.SITTING}
-        cupped={cupped}
         size={size}
       />
     </div>

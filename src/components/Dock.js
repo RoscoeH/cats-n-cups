@@ -10,7 +10,7 @@ import { useGame } from "../hooks/useGame";
 const Dock = ({ size }) => {
   const game = useGame();
 
-  const [canDrop, drop] = useDrop(() => ({
+  const [{ canDrop }, drop] = useDrop(() => ({
     accept: ItemTypes.CAT,
     drop: (item) => {
       if (item.pos) {
@@ -18,7 +18,7 @@ const Dock = ({ size }) => {
       }
     },
     collect: (monitor) => ({
-      canDrop: !!monitor.canDrop() && !monitor.isOver(),
+      canDrop: !!monitor.canDrop() && monitor.isOver(),
     }),
   }));
 
