@@ -93,21 +93,16 @@ export class Game {
     const cat = this.cats.find((cat) => cat.get().id === id);
     cat.set({ ...cat.get(), docked: false });
 
-    // Remove existing cat from cell
     const toCell = this.grid[toPos.y][toPos.x];
-    if (toCell.get()) {
-      const existingCat = toCell.get();
-      if (existingCat.get().id !== id) {
-        existingCat.set({ ...existingCat.get(), docked: true });
-      }
-    }
+    const existingCat = toCell.get();
 
-    // Place target cat in cell
     toCell.set(cat);
 
-    if (fromPos && (fromPos.x !== toPos.x || fromPos.y !== toPos.y)) {
+    if (fromPos) {
       const fromCell = this.grid[fromPos.y][fromPos.x];
-      fromCell.set(null);
+      fromCell.set(existingCat);
+    } else if (existingCat) {
+      existingCat.set({ ...existingCat.get(), docked: true, mad: false });
     }
 
     this.incrementMoves();

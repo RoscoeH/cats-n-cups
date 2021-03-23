@@ -19,6 +19,7 @@ export default {
     hover: "rgba(0,0,0,0.8)",
     cup: "#5C606F",
     angry: "#FF5353",
+    shadow: "rgba(0,0,0,0.1)",
     cat: {
       black: "#333333",
       blue: "#8C9399",

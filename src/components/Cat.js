@@ -151,7 +151,6 @@ const Face = ({ id, color, mad }) => {
 };
 
 export const Cat = ({ id, color, mad, legs, tail, cupped, size }) => {
-  useEffect(() => console.log("mount cat"), []);
   const bodyColor = theme.colors.cat[color || "blue"];
   return (
     <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
@@ -202,7 +201,7 @@ const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
         isDragging: !!monitor.isDragging(),
       }),
     };
-  }, []);
+  }, [cat]);
 
   useEffect(() => preview(getEmptyImage(), { captureDraggingState: true }), [
     preview,
