@@ -2,7 +2,7 @@ import React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { Cat, MOODS } from "../components/Cat";
+import { Cat } from "../components/Cat";
 
 export default {
   title: "Components/Cat",

@@ -36,8 +36,5 @@ export default {
       fontFamily: "body",
       fontWeight: "body",
     },
-    button: {
-      fontFamily: "body",
-    },
   },
 };

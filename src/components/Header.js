@@ -1,11 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "theme-ui";
+import { useHistory } from "react-router";
 
 import { useGame } from "../hooks/useGame";
 import { useObservable } from "../hooks/useObservable";
 
 const Header = () => {
+  const history = useHistory();
   const game = useGame();
   const [moves] = useObservable(game.moves);
   const [time] = useObservable(game.time);
@@ -22,7 +24,7 @@ const Header = () => {
         px: 4,
       }}
     >
-      <button>&lt; back</button>
+      <button onClick={() => history.push("/")}>&lt; back</button>
       <div sx={{ textAlign: "right" }}>
         <div>{`${moves} moves`}</div>
         <div>{time}</div>

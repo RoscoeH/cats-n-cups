@@ -1,5 +1,5 @@
 import { useDragLayer } from "react-dnd";
-import { Cat, MOODS } from "./Cat";
+import { Cat } from "./Cat";
 import { ItemTypes } from "../constants";
 
 const layerStyles = {

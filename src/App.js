@@ -1,26 +1,25 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import useDimensions from "react-use-dimensions";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Grid from "./components/Grid";
-import Dock from "./components/Dock";
-import Header from "./components/Header";
-import CustomDragLayer from "./components/CustomDragLayer";
-
-const MAX_SIZE = 128;
+import Home from "./pages/Home";
+import Play from "./pages/Play";
 
 function App() {
-  const [ref, { width }] = useDimensions();
-  const cellSize = Math.min(width / 4, MAX_SIZE);
-
   return (
-    <div className="App" ref={ref} sx={{ maxWidth: "720px", margin: "0 auto" }}>
-      <CustomDragLayer size={cellSize} />
-      <Header />
-      <Grid size={cellSize} />
-      <Dock size={cellSize} />
-    </div>
+    <Router>
+      <div className="App" sx={{ maxWidth: "720px", margin: "0 auto" }}>
+        <Switch>
+          <Route path="/play">
+            <Play />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
