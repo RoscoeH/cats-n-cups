@@ -26,8 +26,8 @@ const Template = (args) => <Cat {...args} />;
 export const Happy = Template.bind({});
 Happy.args = { size: 128, legs: true, tail: true, mad: false };
 
-// export const Grumpy = Template.bind({});
-// Grumpy.args = { mood: MOODS.GRUMPY };
+export const Grumpy = Template.bind({});
+Grumpy.args = { tail: true, mad: true };
 
-// export const Sleepy = Template.bind({});
-// Sleepy.args = { mood: MOODS.SLEEPY };
+export const Sitting = Template.bind({});
+Sitting.args = {};

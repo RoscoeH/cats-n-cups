@@ -36,5 +36,8 @@ export default {
       fontFamily: "body",
       fontWeight: "body",
     },
+    h1: {
+      fontSize: 2,
+    },
   },
 };
