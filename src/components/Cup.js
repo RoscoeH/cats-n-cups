@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
 import { useDrop } from "react-dnd";
-import { motion } from "framer-motion";
 
 import Cat, { MOODS } from "./Cat";
 import { ItemTypes } from "../constants";
