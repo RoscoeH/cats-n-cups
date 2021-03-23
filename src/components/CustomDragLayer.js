@@ -1,5 +1,5 @@
 import { useDragLayer } from "react-dnd";
-import { Cat } from "./Cat";
+import { Cat, MOODS } from "./Cat";
 import { ItemTypes } from "../constants";
 
 const layerStyles = {
@@ -44,7 +44,7 @@ const CustomDragLayer = ({ size }) => {
   function renderItem() {
     switch (itemType) {
       case ItemTypes.CAT:
-        return <Cat id={item.id} color={item.color} size={size} mood="happy" />;
+        return <Cat id={item.id} color={item.color} size={size} legs tail />;
       default:
         return null;
     }

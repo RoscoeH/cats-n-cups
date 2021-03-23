@@ -227,7 +227,9 @@ const DraggableCat = ({ id, color, mood, cupped, size, x, y }) => {
       <Cat
         id={id}
         color={color}
-        mood={(cat.mad && MOODS.GRUMPY) || mood}
+        mad={cat.mad || mood === MOODS.GRUMPY}
+        tail={mood !== MOODS.SITTING}
+        legs={mood !== MOODS.SITTING}
         cupped={cupped}
         size={size}
       />
