@@ -14,7 +14,7 @@ export const ICONS = Object.keys(ICON_DATA);
 const DEFAULT_SIZE = 32;
 const PADDING = 4;
 
-const IconButton = ({ icon, size = DEFAULT_SIZE }) => {
+const IconButton = ({ icon, size = DEFAULT_SIZE, ...props }) => {
   const iconSize = size - 2 * PADDING;
   return (
     <button
@@ -36,6 +36,7 @@ const IconButton = ({ icon, size = DEFAULT_SIZE }) => {
           boxShadow: "inset 0 0 0 2px",
         },
       }}
+      {...props}
     >
       <InlineIcon icon={ICON_DATA[icon]} width={iconSize} height={iconSize} />
     </button>
