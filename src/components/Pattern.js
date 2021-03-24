@@ -2,7 +2,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
 
-import theme from "../theme";
+import theme from "../core/theme";
 
 const SIZE = 64;
 export const COLORS = Object.keys(theme.colors.cat);
