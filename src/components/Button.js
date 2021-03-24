@@ -2,7 +2,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
 
-const Button = ({ children, large, ...props }) => (
+const Button = ({ children, large, secondary, ...props }) => (
   <button
     sx={{
       boxSizing: "border-box",
@@ -11,8 +11,8 @@ const Button = ({ children, large, ...props }) => (
       fontSize: large ? 1 : 0,
       letterSpacing: large ? 2 : 1,
       textTransform: "uppercase",
-      bg: "dark",
-      color: "light",
+      bg: secondary ? "transparent" : "dark",
+      color: secondary ? "dark" : "light",
       border: "none",
       borderRadius: 999,
       px: large ? 4 : 3,
@@ -20,7 +20,8 @@ const Button = ({ children, large, ...props }) => (
       outline: "none",
 
       "&:hover": {
-        bg: "hover",
+        bg: secondary ? "transparent" : "hover",
+        opacity: secondary ? 0.8 : 1,
       },
       "&:active": {
         bg: "light",

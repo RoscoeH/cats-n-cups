@@ -20,3 +20,9 @@ Large.args = {
   children: "Large",
   large: true,
 };
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  children: "Secondary",
+  secondary: true,
+};
