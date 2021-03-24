@@ -1,4 +1,4 @@
-import { COLORS } from "./components/Pattern";
+import { COLORS } from "../components/Pattern";
 import { range, shuffle } from "./utils";
 import Observable from "./observable";
 
