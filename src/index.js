@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
 import { ThemeProvider } from "theme-ui";
 
-import theme from "./theme";
+import App from "./App";
+import theme from "./core/theme";
 
 ReactDOM.render(
   <React.StrictMode>

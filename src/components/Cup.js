@@ -20,6 +20,7 @@ export const Cup = ({ children, size = 128 }) => (
         top: 0,
         left: 0,
         pointerEvents: "none",
+        zIndex: 1,
       }}
     >
       <ellipse cx="28" cy="52" rx="12" ry="2" sx={{ fill: "shadow" }} />
