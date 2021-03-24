@@ -8,15 +8,17 @@ const DIRECTIONS = [
   [0, -1],
   [0, 1],
 ];
+const MAX_STARS = 3;
 
 export class Game {
   cats = [];
   startTime = null;
   timer = null;
   grid = null;
-  time = new Observable("0s");
+  time = new Observable(0);
   moves = new Observable(0);
   solved = new Observable(false);
+  stars = new Observable(0);
 
   constructor(rows, cols) {
     this.rows = rows;
@@ -118,21 +120,26 @@ export class Game {
         (cat) => cat.get().docked === false && cat.get().mad === false
       )
     ) {
-      this.solved.set(true);
       clearInterval(this.timer);
+      this.calculateStars();
+      this.solved.set(true);
     }
   }
 
-  calculateTime() {
-    const totalSeconds = Math.floor((Date.now() - this.startTime) / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    let time = `${seconds}s`;
+  calculateStars() {
+    const numCups = this.rows * this.cols;
+    const moveGoal = numCups * 2;
+    const maxMoveStars = MAX_STARS;
+    const moveStars = Math.min(
+      MAX_STARS,
+      (maxMoveStars * Math.abs(moveGoal * 1.5 - this.moves.get())) / moveGoal
+    );
+    this.stars.set(moveStars);
+  }
 
-    if (minutes > 0) {
-      time = `${minutes}m ${time}`;
-    }
-    this.time.set(time);
+  calculateTime() {
+    const seconds = Math.floor((Date.now() - this.startTime) / 1000);
+    this.time.set(seconds);
   }
 
   setMoods(ignoredId) {

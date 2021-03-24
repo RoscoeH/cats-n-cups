@@ -21,3 +21,10 @@ export function shuffle(array) {
 export function range(n) {
   return [...Array(n).keys()];
 }
+
+export function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const time = `${remainingSeconds}s`;
+  return minutes > 0 ? `${minutes}m ${time}` : time;
+}

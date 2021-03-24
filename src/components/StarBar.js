@@ -12,14 +12,14 @@ const DEFAULT_SIZE = 48;
 const DEFAULT_MAX_STARS = 3;
 
 function getIcon(index, stars) {
-  const fullOrHalf = stars - index > 1 ? roundStar : roundStarHalf;
+  const fullOrHalf = stars - index >= 1 ? roundStar : roundStarHalf;
   return index < stars ? fullOrHalf : roundStarBorder;
 }
 
 const StarBar = ({ stars, max = DEFAULT_MAX_STARS, size = DEFAULT_SIZE }) => (
   <div>
     {range(max).map((i) => (
-      <InlineIcon icon={getIcon(i, stars)} width={size} height={size} />
+      <InlineIcon key={i} icon={getIcon(i, stars)} width={size} height={size} />
     ))}
   </div>
 );

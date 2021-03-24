@@ -9,4 +9,4 @@ export default {
 const Template = (args) => <WinModal {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { time: "1m 42s", moves: 37, stars: 2.5 };
+Default.args = { time: 102, moves: 37, stars: 2.5 };
