@@ -6,11 +6,11 @@ import { useDrag } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { ItemTypes } from "../constants";
-import { shuffle } from "../utils";
+import { ItemTypes } from "../core/constants";
+import { shuffle } from "../core/utils";
 import { useObservable } from "../hooks/useObservable";
 import { useGame } from "../hooks/useGame";
-import theme from "../theme";
+import theme from "../core/theme";
 
 export const MOODS = {
   SLEEPY: "sleepy",

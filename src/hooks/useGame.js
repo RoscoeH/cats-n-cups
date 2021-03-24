@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import { Game } from "../Game";
-import Observable from "../observable";
+import { Game } from "../core/game";
+import Observable from "../core/observable";
 
 export const game = new Observable(new Game(3, 3));
 

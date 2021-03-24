@@ -1,5 +1,5 @@
 import { ThemeProvider } from "theme-ui";
-import theme from "../src/theme";
+import theme from "../src/core/theme";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

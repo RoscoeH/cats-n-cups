@@ -3,7 +3,7 @@
 import { jsx } from "theme-ui";
 import { useDrop } from "react-dnd";
 
-import { ItemTypes } from "../constants";
+import { ItemTypes } from "../core/constants";
 import Cat, { MOODS } from "./Cat";
 import { useGame } from "../hooks/useGame";
 
