@@ -4,21 +4,26 @@ import { jsx } from "theme-ui";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
+import Levels from "./pages/Levels";
 import Play from "./pages/Play";
+import Scaffold from "./components/Scaffold";
 
 function App() {
   return (
     <Router>
-      <div className="App" sx={{ maxWidth: "720px", margin: "0 auto" }}>
+      <Scaffold>
         <Switch>
           <Route path="/play">
             <Play />
+          </Route>
+          <Route path="/levels">
+            <Levels />
           </Route>
           <Route path="/">
             <Home />
           </Route>
         </Switch>
-      </div>
+      </Scaffold>
     </Router>
   );
 }

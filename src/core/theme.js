@@ -47,8 +47,18 @@ export default {
       fontSize: 2,
       m: 0,
     },
-    button: {
+  },
+  buttons: {
+    level: {
       fontFamily: "body",
+      bg: "light",
+      color: "shadow",
+      border: "1px solid",
+      borderRadius: 8,
+      p: 0,
+      width: 72,
+      height: 72,
+      boxShadow: "0 4px 0 0",
     },
   },
 };

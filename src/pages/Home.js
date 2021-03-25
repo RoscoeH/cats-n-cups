@@ -1,10 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { useHistory } from "react-router-dom";
 import { Styled, jsx } from "theme-ui";
+import { useHistory } from "react-router-dom";
+
 import { Cat } from "../components/Cat";
 import { Cup } from "../components/Cup";
-
 import Button from "../components/Button";
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
         <Button
           large
           sx={{ textAlign: "center" }}
-          onClick={() => history.push("/play")}
+          onClick={() => history.push("/levels")}
         >
           Play
         </Button>

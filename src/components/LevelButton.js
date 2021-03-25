@@ -7,18 +7,7 @@ import roundLock from "@iconify/icons-ic/round-lock";
 import StarBar from "./StarBar";
 
 const LevelButton = ({ level, stars = null, locked }) => (
-  <Button
-    sx={{
-      bg: "light",
-      color: "shadow",
-      border: "1px solid",
-      borderRadius: 16,
-      p: 0,
-      width: 72,
-      height: 72,
-      boxShadow: "0 4px 0 0",
-    }}
-  >
+  <Button variant="level">
     {locked ? (
       <InlineIcon
         icon={roundLock}
