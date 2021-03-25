@@ -162,16 +162,25 @@ export const Cat = ({ id, color, mad, legs, tail, size }) => {
         </g>
       </mask>
       <g mask={`url(#catMask${id})`}>
-        <motion.rect
-          x="0"
-          y="0"
-          width="56"
-          height="56"
-          initial={{ fill: bodyColor }}
-          animate={{
-            fill: mad ? theme.colors.angry : bodyColor,
-          }}
-        />
+        <rect x="0" y="0" width="56" height="56" fill={bodyColor} />
+        {mad && (
+          <motion.rect
+            x="0"
+            y="0"
+            width="56"
+            height="56"
+            sx={{ fill: "angry" }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: [1, 0.5, 1],
+              transition: {
+                duration: 1,
+                loop: Infinity,
+                ease: "easeInOut",
+              },
+            }}
+          />
+        )}
       </g>
       <Face id={id} color={color} mad={mad} />
     </svg>
