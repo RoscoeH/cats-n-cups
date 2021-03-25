@@ -129,12 +129,20 @@ export class Game {
   calculateStars() {
     const numCups = this.rows * this.cols;
     const moveGoal = numCups * 2;
-    const maxMoveStars = MAX_STARS;
+    const maxMoveStars = MAX_STARS / 2;
     const moveStars = Math.min(
-      MAX_STARS,
+      maxMoveStars,
       (maxMoveStars * Math.abs(moveGoal * 1.5 - this.moves.get())) / moveGoal
     );
-    this.stars.set(moveStars);
+
+    const timeGoal = numCups * 4;
+    const maxTimeStars = MAX_STARS / 2;
+    const timeStars = Math.min(
+      maxTimeStars,
+      (maxTimeStars * Math.abs(timeGoal * 1.5 - this.time.get())) / timeGoal
+    );
+
+    this.stars.set(moveStars + timeStars);
   }
 
   calculateTime() {
