@@ -30,7 +30,7 @@ const Play = () => {
       <WinModal
         time={game.time.get()}
         moves={game.moves.get()}
-        stars={game.stars.get()}
+        stars={game.stars}
       />
     </div>
   ) : (

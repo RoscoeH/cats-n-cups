@@ -8,6 +8,8 @@ import { motion, useAnimation } from "framer-motion";
 import Button from "./Button";
 import StarBar from "./StarBar";
 import { formatTime } from "../core/utils";
+import { useGame } from "../hooks/useGame";
+import useProgress from "../hooks/useProgress";
 
 const StatHeader = ({ children }) => (
   <td sx={{ textAlign: "right", fontWeight: "bold", pr: 2 }}>{children}</td>
@@ -29,6 +31,8 @@ const variants = {
 };
 
 const WinModal = ({ time, moves, stars }) => {
+  const [game] = useGame();
+  const progress = useProgress();
   const history = useHistory();
   const timeControls = useAnimation();
   const movesControls = useAnimation();
@@ -43,6 +47,7 @@ const WinModal = ({ time, moves, stars }) => {
   };
 
   useEffect(() => {
+    progress.completeLevel(game.level, game.stars);
     const timeout = setTimeout(sequenceAnimation, 500);
     return () => clearTimeout(timeout);
   });
@@ -106,7 +111,7 @@ const WinModal = ({ time, moves, stars }) => {
             Next
           </Button>
           <div>
-            <Button secondary onClick={() => history.push("/")}>
+            <Button secondary onClick={() => history.push("/levels")}>
               Levels
             </Button>
             <Button secondary onClick={() => history.go(0)}>

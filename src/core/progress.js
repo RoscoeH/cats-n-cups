@@ -9,9 +9,21 @@ export default class Progress {
 
   createLevels() {
     this.levels = AVAILABLE_LEVELS.map((n) => ({
-      level: n,
+      number: n,
       locked: n > 1,
       stars: null,
     }));
+  }
+
+  completeLevel(number, stars) {
+    const level = this.levels.find((level) => level.number === number);
+    level.stars = stars;
+
+    const nextLevel = this.levels.find(
+      (level) => level.number === `${parseInt(number) + 1}`
+    );
+    if (nextLevel) {
+      nextLevel.locked = false;
+    }
   }
 }

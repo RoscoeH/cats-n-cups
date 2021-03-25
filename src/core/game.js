@@ -12,19 +12,21 @@ const DIRECTIONS = [
 const MAX_STARS = 3;
 
 export class Game {
+  level = null;
   rows = null;
   cols = null;
   cats = [];
   startTime = null;
   timer = null;
   grid = null;
+  stars = 0;
   time = new Observable(0);
   moves = new Observable(0);
   solved = new Observable(false);
-  stars = new Observable(0);
 
   loadLevel(level) {
-    console.log(AVAILABLE_LEVELS);
+    this.level = level;
+
     if (!AVAILABLE_LEVELS.includes(level)) {
       throw new Error(
         `Couldn't find level "${level}". Available levels are ${AVAILABLE_LEVELS.join(
@@ -158,7 +160,7 @@ export class Game {
       (maxTimeStars * Math.abs(timeGoal * 1.5 - this.time.get())) / timeGoal
     );
 
-    this.stars.set(moveStars + timeStars);
+    this.stars = moveStars + timeStars;
   }
 
   calculateTime() {

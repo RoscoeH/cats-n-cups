@@ -21,7 +21,10 @@ export const Levels = ({ levels, onLevelClick }) => (
       {levels &&
         levels.map((level, i) => (
           <div key={i} sx={{ textAlign: "center" }}>
-            <LevelButton {...level} onClick={() => onLevelClick(level.level)} />
+            <LevelButton
+              {...level}
+              onClick={() => onLevelClick(level.number)}
+            />
           </div>
         ))}
     </div>
