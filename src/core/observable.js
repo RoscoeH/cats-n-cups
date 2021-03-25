@@ -14,6 +14,10 @@ export default class Observable {
     this.listeners = this.listeners.filter((fn) => fn !== func);
   }
 
+  emit() {
+    this.listeners.forEach((func) => func(this.value));
+  }
+
   get() {
     return this.value;
   }
@@ -22,6 +26,6 @@ export default class Observable {
     if (newValue === this.value) return;
 
     this.value = newValue;
-    this.listeners.forEach((func) => func(this.value));
+    this.emit();
   }
 }

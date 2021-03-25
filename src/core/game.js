@@ -25,6 +25,8 @@ export class Game {
   solved = new Observable(false);
 
   loadLevel(level) {
+    if (this.level) return;
+
     this.level = level;
 
     if (!AVAILABLE_LEVELS.includes(level)) {
