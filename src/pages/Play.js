@@ -11,13 +11,13 @@ import CustomDragLayer from "../components/CustomDragLayer";
 import { useGame } from "../hooks/useGame";
 import { useObservable } from "../hooks/useObservable";
 
-const MAX_SIZE = 128;
+const MAX_SIZE = 112;
 
 const Play = () => {
   const [ref, { width }] = useDimensions();
   const game = useGame();
   const [solved] = useObservable(game.solved);
-  const cellSize = Math.min((width || MAX_SIZE) / 4, MAX_SIZE);
+  const cellSize = Math.min((width || MAX_SIZE) / game.cols, MAX_SIZE);
 
   return solved ? (
     <div

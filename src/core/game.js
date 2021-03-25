@@ -1,6 +1,7 @@
 import { COLORS } from "../components/Pattern";
 import { range, shuffle } from "./utils";
 import Observable from "./observable";
+import LEVELS, { AVAILABLE_LEVELS, LEVEL_CONTENTS } from "./levels";
 
 const DIRECTIONS = [
   [-1, 0],
@@ -11,6 +12,8 @@ const DIRECTIONS = [
 const MAX_STARS = 3;
 
 export class Game {
+  rows = null;
+  cols = null;
   cats = [];
   startTime = null;
   timer = null;
@@ -20,17 +23,28 @@ export class Game {
   solved = new Observable(false);
   stars = new Observable(0);
 
-  constructor(rows, cols) {
-    this.rows = rows;
-    this.cols = cols;
+  loadLevel(level) {
+    console.log(AVAILABLE_LEVELS);
+    if (!AVAILABLE_LEVELS.includes(level)) {
+      throw new Error(
+        `Couldn't find level "${level}". Available levels are ${AVAILABLE_LEVELS.join(
+          ", "
+        )}`
+      );
+    }
 
-    this.createGrid();
+    const levelData = LEVELS[level];
+    this.createGrid(levelData);
     this.createCats();
   }
 
-  createGrid() {
-    this.grid = range(this.rows).map(() =>
-      range(this.cols).map(() => new Observable(null))
+  createGrid(levelData) {
+    this.rows = levelData.length;
+    this.cols = levelData[0].length;
+    this.grid = range(this.rows).map((row) =>
+      range(this.cols).map((col) =>
+        levelData[row][col] === LEVEL_CONTENTS.CUP ? new Observable(null) : null
+      )
     );
   }
 
