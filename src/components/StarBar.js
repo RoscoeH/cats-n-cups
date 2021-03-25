@@ -16,8 +16,13 @@ function getIcon(index, stars) {
   return index < stars ? fullOrHalf : roundStarBorder;
 }
 
-const StarBar = ({ stars, max = DEFAULT_MAX_STARS, size = DEFAULT_SIZE }) => (
-  <div>
+const StarBar = ({
+  stars,
+  max = DEFAULT_MAX_STARS,
+  size = DEFAULT_SIZE,
+  color = "gold",
+}) => (
+  <div sx={{ color }}>
     {range(max).map((i) => (
       <InlineIcon key={i} icon={getIcon(i, stars)} width={size} height={size} />
     ))}

@@ -31,17 +31,24 @@ export default {
       chocolate: "#83692C",
       brown: "#B59978",
     },
+    star: {
+      gold: "#FFD130",
+      brown: "#937200",
+    },
   },
   styles: {
     root: {
       fontFamily: "body",
-      fontWeight: "body",
     },
     h1: {
       fontSize: 3,
     },
     h2: {
       fontSize: 2,
+      m: 0,
+    },
+    button: {
+      fontFamily: "body",
     },
   },
 };
