@@ -179,7 +179,7 @@ export const Cat = ({ id, color, mad, legs, tail, size }) => {
 };
 
 const DraggableCat = ({ id, color, mood, size, x, y }) => {
-  const game = useGame();
+  const [game] = useGame();
   const [cat] = useObservable(game.cats.find((cat) => cat.get().id === id));
   const hasPosition = typeof x !== "undefined" && typeof y !== "undefined";
 

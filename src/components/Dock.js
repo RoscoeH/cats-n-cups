@@ -8,7 +8,7 @@ import Cat, { MOODS } from "./Cat";
 import { useGame } from "../hooks/useGame";
 
 const Dock = ({ size }) => {
-  const game = useGame();
+  const [game] = useGame();
 
   const [{ canDrop }, drop] = useDrop(() => ({
     accept: ItemTypes.CAT,

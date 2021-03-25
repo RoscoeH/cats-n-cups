@@ -10,7 +10,7 @@ const BlankCell = ({ size }) => (
 );
 
 const Grid = ({ size }) => {
-  const game = useGame();
+  const [game] = useGame();
   return (
     <div sx={{ margin: "0 auto" }}>
       {range(game.rows).map((row) => (

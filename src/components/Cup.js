@@ -36,7 +36,7 @@ export const Cup = ({ children, size = 128 }) => (
 );
 
 const DroppableCup = ({ x, y, size }) => {
-  const game = useGame();
+  const [game] = useGame();
   const [cell] = useObservable(game.grid[y][x]);
   const cat = cell && cell.get();
 

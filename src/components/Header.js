@@ -9,7 +9,7 @@ import GameMenu from "./GameMenu";
 
 const Header = () => {
   const history = useHistory();
-  const game = useGame();
+  const [game] = useGame();
   const [moves] = useObservable(game.moves);
   const [time] = useObservable(game.time);
 

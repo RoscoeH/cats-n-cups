@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Scaffold>
         <Switch>
-          <Route path="/play">
+          <Route path="/play/:level">
             <Play />
           </Route>
           <Route path="/levels">

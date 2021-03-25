@@ -72,8 +72,10 @@ export class Game {
 
     range(this.rows).forEach((row) =>
       range(this.cols).forEach((col) => {
-        const id = row * this.cols + col;
-        this.cats.push(this.createCat(col, row, id, colors[id]));
+        if (this.grid[row][col]) {
+          const id = row * this.cols + col;
+          this.cats.push(this.createCat(col, row, id, colors[id]));
+        }
       })
     );
 
@@ -167,33 +169,38 @@ export class Game {
   setMoods(ignoredId) {
     this.grid.forEach((row, y) =>
       row.forEach((cell, x) => {
-        const cat = cell.get();
-        if (cat) {
-          let mad = false;
-          DIRECTIONS.forEach((dir) => {
-            const [dX, dY] = dir;
-            const adjacentX = x + dX;
-            const adjacentY = y + dY;
+        if (cell) {
+          const cat = cell.get();
+          if (cat) {
+            let mad = false;
+            DIRECTIONS.forEach((dir) => {
+              const [dX, dY] = dir;
+              const adjacentX = x + dX;
+              const adjacentY = y + dY;
 
-            if (
-              adjacentX >= 0 &&
-              adjacentX < this.cols &&
-              adjacentY >= 0 &&
-              adjacentY < this.rows
-            ) {
-              const adjacentCat = this.grid[adjacentY][adjacentX].get();
-
-              // If we find a cat that is not in our friends list
               if (
-                adjacentCat &&
-                adjacentCat.get().id !== ignoredId &&
-                !cat.get().friends.includes(adjacentCat.get().id)
+                adjacentX >= 0 &&
+                adjacentX < this.cols &&
+                adjacentY >= 0 &&
+                adjacentY < this.rows
               ) {
-                mad = true;
+                const adjacentCell = this.grid[adjacentY][adjacentX];
+                if (adjacentCell) {
+                  const adjacentCat = adjacentCell.get();
+
+                  // If we find a cat that is not in our friends list
+                  if (
+                    adjacentCat &&
+                    adjacentCat.get().id !== ignoredId &&
+                    !cat.get().friends.includes(adjacentCat.get().id)
+                  ) {
+                    mad = true;
+                  }
+                }
               }
-            }
-          });
-          cat.set({ ...cat.get(), mad });
+            });
+            cat.set({ ...cat.get(), mad });
+          }
         }
       })
     );

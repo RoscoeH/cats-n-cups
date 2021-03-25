@@ -6,8 +6,8 @@ import roundLock from "@iconify/icons-ic/round-lock";
 
 import StarBar from "./StarBar";
 
-const LevelButton = ({ level, stars = null, locked }) => (
-  <Button variant="level">
+const LevelButton = ({ level, stars = null, locked, onClick, ...props }) => (
+  <Button variant="level" {...props} onClick={() => !locked && onClick()}>
     {locked ? (
       <InlineIcon
         icon={roundLock}

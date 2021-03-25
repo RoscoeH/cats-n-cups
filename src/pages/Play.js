@@ -14,8 +14,8 @@ import { useObservable } from "../hooks/useObservable";
 const MAX_SIZE = 112;
 
 const Play = () => {
+  const [game] = useGame();
   const [ref, { width }] = useDimensions();
-  const game = useGame();
   const [solved] = useObservable(game.solved);
   const cellSize = Math.min((width || MAX_SIZE) / game.cols, MAX_SIZE);
 

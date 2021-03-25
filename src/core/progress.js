@@ -1,4 +1,4 @@
-import LEVELS, { AVAILABLE_LEVELS } from "./levels";
+import { AVAILABLE_LEVELS } from "./levels";
 
 export default class Progress {
   levels = {};

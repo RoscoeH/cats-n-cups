@@ -60,8 +60,6 @@ const LEVELS = {
     ["U", "U", "U", "U", "U", "U"],
   ],
 };
-export const AVAILABLE_LEVELS = Object.keys(LEVELS).map((level) =>
-  parseInt(level)
-);
+export const AVAILABLE_LEVELS = Object.keys(LEVELS);
 
 export default LEVELS;

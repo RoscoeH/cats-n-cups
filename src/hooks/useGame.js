@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Game } from "../core/game";
 
 import { game } from "../core/state";
 
@@ -10,5 +11,11 @@ export function useGame() {
     return () => unsub();
   }, []);
 
-  return state;
+  const load = (level) => {
+    const newGame = new Game();
+    newGame.loadLevel(level);
+    game.set(newGame);
+  };
+
+  return [state, load];
 }
