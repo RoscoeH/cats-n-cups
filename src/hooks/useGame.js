@@ -1,8 +1,6 @@
-import { useCallback } from "react";
-import { useMemo } from "react";
-import { useState, useEffect, memo } from "react";
-import { Game } from "../core/game";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
+import { Game } from "../core/game";
 import { game } from "../core/state";
 
 export function useGame(level) {

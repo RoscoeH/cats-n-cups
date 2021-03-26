@@ -33,7 +33,7 @@ export const Levels = ({ levels, onLevelClick }) => (
 
 export default function LevelsPage() {
   const history = useHistory();
-  const { levels } = useProgress();
+  const [progress] = useProgress();
   const [, newGame] = useGame();
 
   function handleLevelClick(level) {
@@ -41,5 +41,5 @@ export default function LevelsPage() {
     history.push(`/play/${level}`);
   }
 
-  return <Levels levels={levels} onLevelClick={handleLevelClick} />;
+  return <Levels levels={progress} onLevelClick={handleLevelClick} />;
 }
