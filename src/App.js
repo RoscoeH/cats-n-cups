@@ -15,7 +15,7 @@ function App() {
       <Scaffold>
         <Route
           render={({ location }) => (
-            <AnimatePresence initial={false} exitBeforeEnter>
+            <AnimatePresence exitBeforeEnter>
               <Switch location={location} key={location.pathname}>
                 <Route path="/play/:level">
                   <Play />

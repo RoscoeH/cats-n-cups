@@ -10,13 +10,15 @@ import Button from "../components/Button";
 
 const variants = {
   in: {
-    // opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      staggerDirection: -1,
+    },
   },
   out: {
     transition: {
       staggerChildren: 0.1,
       staggerDirection: -1,
-      ease: "easeIn",
     },
   },
 };
@@ -38,7 +40,7 @@ const childVariants = {
 const Home = () => {
   const history = useHistory();
   return (
-    <motion.div variants={variants} initial="in" animate="in" exit="out">
+    <motion.div variants={variants} initial="out" animate="in" exit="out">
       <motion.div variants={childVariants}>
         <Styled.h1 sx={{ textAlign: "center" }}>Cats in Cups</Styled.h1>
       </motion.div>
@@ -56,7 +58,13 @@ const Home = () => {
         </div>
         <Cat id="3" color="amber" />
       </motion.div>
-      <motion.div variants={childVariants} sx={{ textAlign: "center" }}>
+      <motion.div
+        variants={childVariants}
+        initial="out"
+        animate="in"
+        exit="out"
+        sx={{ textAlign: "center" }}
+      >
         <Button
           large
           sx={{ textAlign: "center" }}
