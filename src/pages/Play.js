@@ -3,6 +3,7 @@
 import { jsx } from "theme-ui";
 import { useParams } from "react-router";
 import useDimensions from "react-use-dimensions";
+import { motion } from "framer-motion";
 
 import Grid from "../components/Grid";
 import Dock from "../components/Dock";
@@ -14,13 +15,34 @@ import { useObservable } from "../hooks/useObservable";
 
 const MAX_SIZE = 112;
 
+const transition = { duration: 0.2, ease: "easeIn" };
+const variants = {
+  in: {
+    opacity: 1,
+    transition,
+  },
+  out: {
+    opacity: 0,
+    transition,
+  },
+};
+
 export const Play = ({ game }) => {
   const [ref, { width }] = useDimensions();
   const [solved] = useObservable(game.solved);
   const cellSize = Math.min((width || MAX_SIZE) / game.cols, MAX_SIZE);
 
   return (
-    <div ref={ref}>
+    <motion.div
+      variants={variants}
+      initial="out"
+      animate="in"
+      exit="out"
+      ref={ref}
+      sx={{
+        overflow: "hidden",
+      }}
+    >
       <CustomDragLayer size={cellSize} />
       <Header />
       <Grid size={cellSize} />
@@ -32,7 +54,7 @@ export const Play = ({ game }) => {
           stars={game.stars}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 

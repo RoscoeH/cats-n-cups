@@ -69,17 +69,17 @@ const WinModal = ({ time, moves, stars }) => {
         zIndex: 100,
         textAlign: "center",
         position: "absolute",
-        top: 0,
-        width: "100%",
-        height: "100%",
+        bottom: 0,
+        left: 0,
+        right: 0,
         pt: 5,
       }}
-      initial={{ opacity: 0, y: 128 }}
+      initial={{ opacity: 0, top: 128 }}
       animate={{
         opacity: 1,
-        y: 0,
+        top: 0,
         transition: {
-          delay: 2,
+          delay: 1,
         },
       }}
     >
