@@ -34,7 +34,6 @@ const LevelButton = ({ number, stars = null, locked, onClick, ...props }) => {
         color: theme.colors.hover,
         borderColor: theme.colors.hover,
       }}
-      variant="level"
       {...props}
       onClick={() => !locked && onClick()}
     >

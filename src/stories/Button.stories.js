@@ -13,6 +13,8 @@ const Template = ({ children, ...args }) => (
 export const Default = Template.bind({});
 Default.args = {
   children: "Default",
+  large: false,
+  secondary: false,
 };
 
 export const Large = Template.bind({});
