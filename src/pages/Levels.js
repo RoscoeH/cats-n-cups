@@ -5,35 +5,18 @@ import { useHistory } from "react-router";
 import { motion } from "framer-motion";
 
 import useProgress from "../hooks/useProgress";
-import { useGame } from "../hooks/useGame";
 import LevelButton from "../components/LevelButton";
 
 const variants = {
-  in: {
-    transition: {
-      staggerChildren: 0.1,
-      staggerDirection: -1,
-    },
-  },
-  out: {
-    transition: {
-      staggerChildren: 0.1,
-      staggerDirection: -1,
-    },
-  },
+  in: { transition: { staggerChildren: 0.1 } },
+  out: { transition: { staggerChildren: 0.1 } },
 };
-
 const childVariants = {
   in: {
     opacity: 1,
-    y: "0vh",
   },
   out: {
     opacity: 0,
-    y: "10vh",
-    transition: {
-      ease: "easeIn",
-    },
   },
 };
 
@@ -59,17 +42,12 @@ export const Levels = ({ levels, onLevelClick }) => (
     >
       {levels &&
         levels.map((level, i) => (
-          <motion.div
-            key={i}
-            custom={i}
-            // variants={buttonVariants}
-            sx={{ textAlign: "center" }}
-          >
+          <div sx={{ textAlign: "center" }}>
             <LevelButton
               {...level}
               onClick={() => onLevelClick(level.number)}
             />
-          </motion.div>
+          </div>
         ))}
     </motion.div>
   </motion.div>
@@ -78,10 +56,8 @@ export const Levels = ({ levels, onLevelClick }) => (
 export default function LevelsPage() {
   const history = useHistory();
   const [progress] = useProgress();
-  const [, newGame] = useGame();
 
   function handleLevelClick(level) {
-    newGame(level);
     history.push(`/play/${level}`);
   }
 

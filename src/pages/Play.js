@@ -12,6 +12,7 @@ import WinModal from "../components/WinModal";
 import CustomDragLayer from "../components/CustomDragLayer";
 import { useGame } from "../hooks/useGame";
 import { useObservable } from "../hooks/useObservable";
+import useProgress from "../hooks/useProgress";
 
 const MAX_SIZE = 112;
 
@@ -28,6 +29,7 @@ const variants = {
 };
 
 export const Play = ({ game }) => {
+  useProgress();
   const [ref, { width }] = useDimensions();
   const [solved] = useObservable(game.solved);
   const cellSize = Math.min((width || MAX_SIZE) / game.cols, MAX_SIZE);

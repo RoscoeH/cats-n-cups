@@ -21,7 +21,7 @@ const LevelButton = ({ number, stars = null, locked, onClick, ...props }) => {
         height: 72,
         outline: "none",
       }}
-      animate={{
+      initial={{
         color: theme.colors.shadow,
         borderColor: theme.colors.shadow,
         boxShadow: "0 4px 0 0",
