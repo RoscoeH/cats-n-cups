@@ -8,49 +8,48 @@ import useProgress from "../hooks/useProgress";
 import { useGame } from "../hooks/useGame";
 import LevelButton from "../components/LevelButton";
 
-const inValues = { opacity: 1, y: "0vh" };
-const outValues = { opacity: 0, y: "-10vh" };
-const stagger = { staggerChildren: 0.1 };
-// const staggerLevels = { staggerChildren: 0.025 };
-const ease = { ease: "easeOut" };
-const parentVariants = {
-  in: { transition: stagger },
-  out: { transition: stagger },
-};
 const variants = {
   in: {
-    ...inValues,
-    transition: { ...ease, when: "beforeChildren" },
+    transition: {
+      staggerChildren: 0.1,
+      staggerDirection: -1,
+    },
   },
   out: {
-    ...outValues,
-    transition: ease,
+    transition: {
+      staggerChildren: 0.1,
+      staggerDirection: -1,
+    },
   },
 };
-const buttonVariants = {
-  in: (i) => ({
-    ...inValues,
-    transition: { ...ease, delay: i * 0.025 },
-  }),
-  out: (i) => ({
-    ...outValues,
-    transition: { ...ease, delay: i * 0.025 },
-  }),
+
+const childVariants = {
+  in: {
+    opacity: 1,
+    y: "0vh",
+  },
+  out: {
+    opacity: 0,
+    y: "10vh",
+    transition: {
+      ease: "easeIn",
+    },
+  },
 };
 
 export const Levels = ({ levels, onLevelClick }) => (
   <motion.div
     sx={{ maxWidth: "360px", m: "0 auto" }}
-    variants={parentVariants}
+    variants={variants}
     initial="out"
     animate="in"
     exit="out"
   >
-    <motion.div variants={variants}>
+    <motion.div variants={childVariants}>
       <Styled.h1 sx={{ textAlign: "center" }}>Levels</Styled.h1>
     </motion.div>
     <motion.div
-      // variants={levelsVariants}
+      variants={childVariants}
       sx={{
         display: "grid",
         gridRowGap: "24px",
@@ -63,7 +62,7 @@ export const Levels = ({ levels, onLevelClick }) => (
           <motion.div
             key={i}
             custom={i}
-            variants={buttonVariants}
+            // variants={buttonVariants}
             sx={{ textAlign: "center" }}
           >
             <LevelButton
