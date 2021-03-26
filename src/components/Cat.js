@@ -21,7 +21,7 @@ export const MOODS = {
 const DARK_COLORS = ["black", "chocolate"];
 
 const Eye = ({ id, r, delay, intervals, ...props }) => {
-  // const [open, setOpen] = useState(true);
+  const [open] = useState(true);
   // useEffect(() => {
   //   const ints = [];
   //   const timeouts = [];
@@ -58,7 +58,7 @@ const Eye = ({ id, r, delay, intervals, ...props }) => {
           fill="black"
           initial="open"
           transition={{ duration: 0.05 }}
-          // animate={open ? "open" : "closed"}
+          animate={open ? "open" : "closed"}
           variants={variants}
           {...props}
         />
