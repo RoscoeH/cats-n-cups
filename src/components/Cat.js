@@ -150,10 +150,13 @@ const Face = ({ id, color, mad }) => {
   );
 };
 
-export const Cat = ({ id, color, mad, legs, tail, size }) => {
+export const Cat = ({ id, color, mad, legs, tail, shadow, size }) => {
   const bodyColor = theme.colors.cat[color || "blue"];
   return (
     <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
+      {shadow && (
+        <ellipse cx="28" cy="44" rx="12" ry="2" sx={{ fill: "shadow" }} />
+      )}
       <mask id={`catMask${id}`}>
         <g fill="white" transform="translate(12 12)">
           <Body />
@@ -228,6 +231,7 @@ const DraggableCat = ({ id, color, mood, size, x, y }) => {
         mad={cat.mad || mood === MOODS.GRUMPY}
         tail={mood !== MOODS.SITTING}
         legs={mood !== MOODS.SITTING}
+        shadow={mood === MOODS.SITTING}
         size={size}
       />
     </div>
