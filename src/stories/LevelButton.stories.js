@@ -9,16 +9,16 @@ export default {
 const Template = (args) => <LevelButton {...args} />;
 
 export const Locked = Template.bind({});
-Locked.args = { level: 9, locked: true };
+Locked.args = { number: 9, locked: true };
 
 export const Unplayed = Template.bind({});
-Unplayed.args = { level: 8 };
+Unplayed.args = { number: 8 };
 
 export const OneStar = Template.bind({});
-OneStar.args = { level: 7, stars: 1 };
+OneStar.args = { number: 7, stars: 1 };
 
 export const TwoStar = Template.bind({});
-TwoStar.args = { level: 6, stars: 2 };
+TwoStar.args = { number: 6, stars: 2 };
 
 export const ThreeStar = Template.bind({});
-ThreeStar.args = { level: 5, stars: 3 };
+ThreeStar.args = { number: 5, stars: 3 };

@@ -16,10 +16,10 @@ export default {
     dark: "#000",
     light: "#fff",
     border: "rgba(0, 0, 0, 0.15)",
-    hover: "rgba(0,0,0,0.8)",
+    hover: "rgba(0,0,0,0.5)",
+    shadow: "rgba(0,0,0,0.1)",
     cup: "#5C606F",
     angry: "#FF5353",
-    shadow: "rgba(0,0,0,0.1)",
     cat: {
       black: "#333333",
       blue: "#8C9399",
@@ -46,19 +46,6 @@ export default {
     h2: {
       fontSize: 2,
       m: 0,
-    },
-  },
-  buttons: {
-    level: {
-      fontFamily: "body",
-      bg: "light",
-      color: "shadow",
-      border: "1px solid",
-      borderRadius: 8,
-      p: 0,
-      width: 72,
-      height: 72,
-      boxShadow: "0 4px 0 0",
     },
   },
 };
