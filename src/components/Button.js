@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const Button = ({ children, large, secondary, ...props }) => {
   const { theme } = useThemeUI();
-  const { light, dark, star, hover, shadow } = theme.colors;
+  const { light, dark, star, shadow } = theme.colors;
   return (
     <motion.button
       sx={{
