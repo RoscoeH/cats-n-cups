@@ -178,7 +178,7 @@ export const Cat = ({ id, color, mad, legs, tail, shadow, size }) => {
               opacity: [1, 0.5, 1],
               transition: {
                 duration: 1,
-                loop: Infinity,
+                repeat: Infinity,
                 ease: "easeInOut",
               },
             }}

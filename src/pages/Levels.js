@@ -11,7 +11,7 @@ import LevelButton from "../components/LevelButton";
 const inValues = { opacity: 1, y: "0vh" };
 const outValues = { opacity: 0, y: "-10vh" };
 const stagger = { staggerChildren: 0.1 };
-const staggerLevels = { staggerChildren: 0.025 };
+// const staggerLevels = { staggerChildren: 0.025 };
 const ease = { ease: "easeOut" };
 const parentVariants = {
   in: { transition: stagger },
@@ -20,20 +20,22 @@ const parentVariants = {
 const variants = {
   in: {
     ...inValues,
-    transition: ease,
+    transition: { ...ease, when: "beforeChildren" },
   },
   out: {
     ...outValues,
     transition: ease,
   },
 };
-const levelsVariants = {
-  in: {
-    transition: { ...ease, ...staggerLevels },
-  },
-  out: {
-    transition: { ...ease, ...staggerLevels },
-  },
+const buttonVariants = {
+  in: (i) => ({
+    ...inValues,
+    transition: { ...ease, delay: i * 0.025 },
+  }),
+  out: (i) => ({
+    ...outValues,
+    transition: { ...ease, delay: i * 0.025 },
+  }),
 };
 
 export const Levels = ({ levels, onLevelClick }) => (
@@ -48,7 +50,7 @@ export const Levels = ({ levels, onLevelClick }) => (
       <Styled.h1 sx={{ textAlign: "center" }}>Levels</Styled.h1>
     </motion.div>
     <motion.div
-      variants={levelsVariants}
+      // variants={levelsVariants}
       sx={{
         display: "grid",
         gridRowGap: "24px",
@@ -58,7 +60,12 @@ export const Levels = ({ levels, onLevelClick }) => (
     >
       {levels &&
         levels.map((level, i) => (
-          <motion.div key={i} variants={variants} sx={{ textAlign: "center" }}>
+          <motion.div
+            key={i}
+            custom={i}
+            variants={buttonVariants}
+            sx={{ textAlign: "center" }}
+          >
             <LevelButton
               {...level}
               onClick={() => onLevelClick(level.number)}

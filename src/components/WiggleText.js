@@ -22,7 +22,7 @@ const WiggleText = ({
         transition={{
           duration: DEFAULT_DURATION,
           ease: "easeInOut",
-          loop: Infinity,
+          repeat: Infinity,
           delay: index * 0.3,
         }}
       >
