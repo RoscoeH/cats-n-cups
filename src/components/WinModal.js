@@ -34,7 +34,7 @@ const variants = {
 };
 
 const WinModal = ({ time, moves, stars }) => {
-  const [game] = useGame();
+  const [game, load] = useGame();
   const [progress, setProgress] = useProgress();
   const history = useHistory();
   const [, setData] = useStorage("progress");
@@ -124,7 +124,7 @@ const WinModal = ({ time, moves, stars }) => {
           <Button secondary onClick={() => history.push("/levels")}>
             Levels
           </Button>
-          <Button secondary onClick={() => history.go(0)}>
+          <Button secondary onClick={() => load()}>
             Retry
           </Button>
         </div>

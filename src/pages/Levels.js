@@ -4,7 +4,6 @@ import { jsx, Styled } from "theme-ui";
 import { useHistory } from "react-router";
 import { motion } from "framer-motion";
 
-import { useGame } from "../hooks/useGame";
 import useProgress from "../hooks/useProgress";
 import LevelButton from "../components/LevelButton";
 
@@ -43,7 +42,7 @@ export const Levels = ({ levels, onLevelClick }) => (
     >
       {levels &&
         levels.map((level, i) => (
-          <div sx={{ textAlign: "center" }}>
+          <div key={i} sx={{ textAlign: "center" }}>
             <LevelButton
               {...level}
               onClick={() => onLevelClick(level.number)}
@@ -57,7 +56,6 @@ export const Levels = ({ levels, onLevelClick }) => (
 export default function LevelsPage() {
   const history = useHistory();
   const [progress] = useProgress();
-  useGame();
 
   function handleLevelClick(level) {
     history.push(`/play/${level}`);
