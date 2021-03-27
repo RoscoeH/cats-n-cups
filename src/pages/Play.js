@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { useParams } from "react-router";
+import { useParams, Redirect } from "react-router";
 import useDimensions from "react-use-dimensions";
 import { motion } from "framer-motion";
 
@@ -29,7 +29,6 @@ const variants = {
 };
 
 export const Play = ({ game }) => {
-  useProgress();
   const [ref, { width }] = useDimensions();
   const [solved] = useObservable(game.solved);
   const cellSize = Math.min((width || MAX_SIZE) / game.cols, MAX_SIZE);
@@ -61,7 +60,18 @@ export const Play = ({ game }) => {
 };
 
 export default function PlayPage() {
+  const [progress] = useProgress();
   const { level } = useParams();
   const [game] = useGame(level);
-  return game.level ? <Play game={game} /> : <div />;
+  const isLevelUnlocked =
+    progress && progress.some((l) => l.number === level && !l.locked);
+
+  const redirectOrLoading =
+    progress && !isLevelUnlocked ? <Redirect to="/levels" /> : <div />;
+
+  return game.level && isLevelUnlocked ? (
+    <Play game={game} />
+  ) : (
+    redirectOrLoading
+  );
 }
