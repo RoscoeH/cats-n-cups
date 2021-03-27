@@ -4,23 +4,20 @@ import { Game } from "../core/game";
 import { game } from "../core/state";
 
 export function useGame(level) {
-  useMemo(() => {
-    if (level) {
-      game.get().loadLevel(level);
-    }
-  }, [level]);
+  const load = useCallback((level) => {
+    const newGame = new Game();
+    newGame.loadLevel(level);
+    game.set(newGame);
+  }, []);
+
+  useMemo(() => level && load(level), [load, level]);
+
   const [state, setState] = useState(game.get());
 
   useEffect(() => {
     const unsub = game.subscribe(setState);
     return () => unsub();
   }, [level]);
-
-  const load = useCallback((level) => {
-    const newGame = new Game();
-    newGame.loadLevel(level);
-    game.set(newGame);
-  }, []);
 
   return [state, load];
 }
