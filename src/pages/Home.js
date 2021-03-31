@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { Cat } from "../components/Cat";
 import { Cup } from "../components/Cup";
 import Button from "../components/Button";
+import { generateColors } from "../core/utils";
+import { useMemo } from "react";
 
 const variants = {
   in: {
@@ -39,6 +41,7 @@ const childVariants = {
 
 const Home = () => {
   const history = useHistory();
+  const colors = useMemo(() => generateColors(3), []);
   return (
     <motion.div variants={variants} initial="out" animate="in" exit="out">
       <motion.div variants={childVariants}>
@@ -50,13 +53,24 @@ const Home = () => {
       >
         <div sx={{ display: "flex", justifyContent: "center" }}>
           <Cup>
-            <Cat id="1" color="blue" tail />
+            <Cat
+              id="1"
+              color={colors[0].color}
+              faceColor={colors[0].faceColor}
+              tail
+            />
           </Cup>
           <Cup>
-            <Cat id="2" color="brown" mad tail />
+            <Cat
+              id="2"
+              color={colors[1].color}
+              faceColor={colors[1].faceColor}
+              mad
+              tail
+            />
           </Cup>
         </div>
-        <Cat id="3" color="amber" />
+        <Cat id="3" color={colors[2].color} faceColor={colors[2].faceColor} />
       </motion.div>
       <motion.div
         variants={childVariants}
