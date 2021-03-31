@@ -19,10 +19,13 @@ const Button = ({ children, large, secondary, ...props }) => {
         borderRadius: 999,
         px: large ? 4 : 3,
         py: large ? 3 : 2,
+        color: secondary ? dark : light,
         outline: "none",
+        "&:hover": {
+          color: secondary ? dark : star.gold,
+        },
       }}
       initial={{
-        color: secondary ? dark : light,
         boxShadow: `0 ${large ? 8 : 4}px 0 0 ${secondary ? shadow : star.gold}`,
         border: secondary ? `1px solid ${shadow}` : "none",
       }}
