@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 
 import { Game } from "../core/game";
 import { AVAILABLE_LEVELS } from "../core/levels";
@@ -18,12 +18,5 @@ export function useGame(level) {
 
   useMemo(() => level && load(level), [load, level]);
 
-  const [state, setState] = useState(game.get());
-
-  useEffect(() => {
-    const unsub = game.subscribe(setState);
-    return () => unsub();
-  }, [level]);
-
-  return [state, load];
+  return [game.get(), load];
 }

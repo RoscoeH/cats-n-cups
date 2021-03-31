@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { Styled, jsx } from "theme-ui";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 
@@ -37,6 +37,7 @@ const WinModal = ({ time, moves, stars }) => {
   const [game] = useGame();
   const [progress, setProgress] = useProgress();
   const history = useHistory();
+  const { level } = useParams();
   const [, setData] = useStorage("progress");
 
   const timeControls = useAnimation();
@@ -56,9 +57,14 @@ const WinModal = ({ time, moves, stars }) => {
     setProgress(newProgress);
     setData(newProgress);
 
-    const timeout = setTimeout(sequenceAnimation, 3000);
+    const timeout = setTimeout(sequenceAnimation, 2000);
     return () => clearTimeout(timeout);
   });
+
+  const nextLevel = progress.find(
+    ({ number }) => number === `${parseInt(level) + 1}`
+  );
+  const goToNextLevel = () => history.push(`/play/${nextLevel.number}`);
 
   return (
     <motion.div
@@ -117,11 +123,17 @@ const WinModal = ({ time, moves, stars }) => {
         initial="hidden"
         animate={buttonsControls}
       >
-        <Button large sx={{ mb: 3 }}>
-          Next
-        </Button>
+        {nextLevel && (
+          <Button large sx={{ mb: 4 }} onClick={goToNextLevel}>
+            Next
+          </Button>
+        )}
         <div>
-          <Button secondary onClick={() => history.push("/levels")}>
+          <Button
+            secondary
+            onClick={() => history.push("/levels")}
+            sx={{ mr: 3 }}
+          >
             Levels
           </Button>
           <Button secondary onClick={() => history.go(0)}>

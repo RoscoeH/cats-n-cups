@@ -43,7 +43,6 @@ export function generateColors(count) {
     // Remove red colors
     colors = colors.filter((color) => {
       const hue = color.toHsv().h;
-      console.log("hue", hue);
       return hue > 20 && hue < 340;
     });
 
