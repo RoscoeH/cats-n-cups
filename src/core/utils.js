@@ -1,3 +1,5 @@
+import { random } from "@ctrl/tinycolor";
+
 export function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,
@@ -27,4 +29,46 @@ export function formatTime(seconds) {
   const remainingSeconds = seconds % 60;
   const time = `${remainingSeconds}s`;
   return minutes > 0 ? `${minutes}m ${time}` : time;
+}
+
+export function generateColors(count) {
+  let colors = [];
+
+  function generate() {
+    const newColors = random({ count: count - colors.length });
+    newColors.forEach((color) => colors.push(color));
+  }
+
+  function filter() {
+    // Remove red colors
+    colors = colors.filter((color) => {
+      const hue = color.toHsv().h;
+      console.log("hue", hue);
+      return hue > 20 && hue < 340;
+    });
+
+    // Remove similar colors
+    colors = colors.filter((color) => {
+      const otherColors = colors.filter((otherColor) => color !== otherColor);
+
+      return otherColors.every((otherColor) => {
+        const hsv = color.toHsv();
+        const otherHsv = otherColor.toHsv();
+        const hueDiff = Math.abs(hsv.h - otherHsv.h);
+        const satDiff = Math.abs(hsv.s - otherHsv.s);
+        const valDiff = Math.abs(hsv.v - otherHsv.v);
+        return hueDiff > 36 || satDiff > 0.3 || valDiff > 0.3;
+      });
+    });
+  }
+
+  while (colors.length < count) {
+    generate();
+    filter();
+  }
+
+  return colors.map((color) => ({
+    color: color.toHexString(),
+    faceColor: color.isDark() ? "#fff" : "#000",
+  }));
 }

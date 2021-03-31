@@ -10,7 +10,6 @@ import { ItemTypes } from "../core/constants";
 import { shuffle } from "../core/utils";
 import { useObservable } from "../hooks/useObservable";
 import { useGame } from "../hooks/useGame";
-import theme from "../core/theme";
 
 export const MOODS = {
   SLEEPY: "sleepy",
@@ -18,7 +17,6 @@ export const MOODS = {
   GRUMPY: "grumpy",
   SITTING: "sitting",
 };
-const DARK_COLORS = ["black", "chocolate"];
 
 const Eye = ({ id, r, delay, intervals, ...props }) => {
   const [open] = useState(true);
@@ -76,23 +74,15 @@ const Body = () => (
   </g>
 );
 
-const Tail = ({ visible }) => (
-  <AnimatePresence>
-    {visible && (
-      <motion.path
-        key="child"
-        d="M2 7C2 4.23858 4.23858 2 7 2C9.76142 2 12 4.23858 12 7"
-        stroke="white"
-        strokeWidth="4"
-        strokeLinecap="round"
-        fill="none"
-        transform="translate(28 8)"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        exit={{ pathLength: 0 }}
-      />
-    )}
-  </AnimatePresence>
+const Tail = ({ color = "currentColor" }) => (
+  <path
+    d="M2 7C2 4.23858 4.23858 2 7 2C9.76142 2 12 4.23858 12 7"
+    stroke={color}
+    strokeWidth="4"
+    strokeLinecap="round"
+    fill="none"
+    transform="translate(28 8)"
+  />
 );
 
 const Legs = ({ visible }) => (
@@ -115,15 +105,20 @@ const Legs = ({ visible }) => (
   </AnimatePresence>
 );
 
+const Silhouette = ({ color, legs, tail }) => (
+  <g fill={color} transform="translate(12 12)">
+    <Body />
+    <Legs visible={legs} />
+    {tail && <Tail color={color} />}
+  </g>
+);
+
 const EYE_INTERVALS = [7, 13, 17, 19, 23];
 const Face = ({ id, color, mad }) => {
   const [delay] = useState(Math.round(Math.random() * 1000));
   const [intervals] = useState(shuffle(EYE_INTERVALS).slice(1));
   return (
-    <g
-      transform="translate(18, 20)"
-      sx={{ fill: DARK_COLORS.includes(color) ? "light" : "dark" }}
-    >
+    <g transform="translate(18, 20)" sx={{ fill: color }}>
       <g>
         <Eye
           id={`${id}${1}`}
@@ -150,29 +145,26 @@ const Face = ({ id, color, mad }) => {
   );
 };
 
-export const Cat = ({ id, color, mad, legs, tail, shadow, size }) => {
-  const bodyColor = theme.colors.cat[color || "blue"];
+export const Cat = ({
+  id,
+  color = "gray",
+  faceColor = "black",
+  mad,
+  legs,
+  tail,
+  shadow,
+  size,
+}) => {
   return (
     <svg width={size || 128} height={size || 128} viewBox="0 0 56 56">
       {shadow && (
         <ellipse cx="28" cy="44" rx="12" ry="2" sx={{ fill: "shadow" }} />
       )}
-      <mask id={`catMask${id}`}>
-        <g fill="white" transform="translate(12 12)">
-          <Body />
-          <Legs visible={legs} />
-          <Tail visible={tail} />
-        </g>
-      </mask>
-      <g mask={`url(#catMask${id})`}>
-        <rect x="0" y="0" width="56" height="56" fill={bodyColor} />
+      <g>
+        <Silhouette color={color} legs={legs} tail={tail} />
         {mad && (
-          <motion.rect
-            x="0"
-            y="0"
-            width="56"
-            height="56"
-            sx={{ fill: "angry" }}
+          <motion.g
+            sx={{ fill: "angry", color: "angry" }}
             initial={{ opacity: 0 }}
             animate={{
               opacity: [1, 0.5, 1],
@@ -182,15 +174,17 @@ export const Cat = ({ id, color, mad, legs, tail, shadow, size }) => {
                 ease: "easeInOut",
               },
             }}
-          />
+          >
+            <Silhouette legs={legs} tail={tail} />
+          </motion.g>
         )}
       </g>
-      <Face id={id} color={color} mad={mad} />
+      <Face id={id} color={faceColor} mad={mad} />
     </svg>
   );
 };
 
-const DraggableCat = ({ id, color, mood, size, x, y }) => {
+const DraggableCat = ({ id, color, faceColor, mood, size, x, y }) => {
   const [game] = useGame();
   const [cat] = useObservable(game.cats.find((cat) => cat.get().id === id));
   const hasPosition = typeof x !== "undefined" && typeof y !== "undefined";
@@ -203,6 +197,7 @@ const DraggableCat = ({ id, color, mood, size, x, y }) => {
         return {
           id,
           color,
+          faceColor,
           size,
           pos: hasPosition && { x, y },
         };
@@ -228,6 +223,7 @@ const DraggableCat = ({ id, color, mood, size, x, y }) => {
       <Cat
         id={id}
         color={color}
+        faceColor={faceColor}
         mad={cat.mad || mood === MOODS.GRUMPY}
         tail={mood !== MOODS.SITTING}
         legs={mood !== MOODS.SITTING}

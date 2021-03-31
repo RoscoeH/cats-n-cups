@@ -44,7 +44,16 @@ const CustomDragLayer = ({ size }) => {
   function renderItem() {
     switch (itemType) {
       case ItemTypes.CAT:
-        return <Cat id={item.id} color={item.color} size={size} legs tail />;
+        return (
+          <Cat
+            id={item.id}
+            color={item.color}
+            faceColor={item.faceColor}
+            size={size}
+            legs
+            tail
+          />
+        );
       default:
         return null;
     }

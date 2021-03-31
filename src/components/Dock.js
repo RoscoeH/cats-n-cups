@@ -37,7 +37,7 @@ const Dock = ({ size }) => {
       }}
     >
       {game.cats.map((cat) => {
-        const { id, color } = cat.get();
+        const { id, color, faceColor } = cat.get();
         return (
           <div
             key={id}
@@ -46,7 +46,13 @@ const Dock = ({ size }) => {
               display: "inline-block",
             }}
           >
-            <Cat id={id} color={color} mood={MOODS.SITTING} size={size} />
+            <Cat
+              id={id}
+              color={color}
+              faceColor={faceColor}
+              mood={MOODS.SITTING}
+              size={size}
+            />
           </div>
         );
       })}

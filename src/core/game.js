@@ -1,5 +1,4 @@
-import { COLORS } from "../components/Pattern";
-import { range, shuffle } from "./utils";
+import { generateColors, range, shuffle } from "./utils";
 import Observable from "./observable";
 import LEVELS, { AVAILABLE_LEVELS, LEVEL_CONTENTS } from "./levels";
 
@@ -52,10 +51,11 @@ export class Game {
     );
   }
 
-  createCat(x, y, id, color) {
+  createCat(x, y, id, colors) {
     return new Observable({
       id,
-      color: color,
+      color: colors.color,
+      faceColor: colors.faceColor,
       friends: DIRECTIONS.map(([dX, dY]) => {
         const adjacentX = x + dX;
         const adjacentY = y + dY;
@@ -72,13 +72,20 @@ export class Game {
   }
 
   createCats() {
-    const colors = shuffle(COLORS.slice());
+    const numCats = this.grid.reduce(
+      (count, row) =>
+        count + row.reduce((catsInRow, cell) => catsInRow + (cell ? 1 : 0), 0),
+      0
+    );
+    const colors = generateColors(numCats);
 
+    let i = 0;
     range(this.rows).forEach((row) =>
       range(this.cols).forEach((col) => {
         if (this.grid[row][col]) {
           const id = row * this.cols + col;
-          this.cats.push(this.createCat(col, row, id, colors[id]));
+          this.cats.push(this.createCat(col, row, id, colors[i]));
+          i++;
         }
       })
     );

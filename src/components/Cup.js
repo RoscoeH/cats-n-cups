@@ -65,6 +65,7 @@ const DroppableCup = ({ x, y, size }) => {
           <Cat
             id={cat.id}
             color={cat.color}
+            faceColor={cat.faceColor}
             mood={MOODS.HAPPY}
             x={x}
             y={y}
