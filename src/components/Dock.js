@@ -25,37 +25,40 @@ const Dock = ({ size }) => {
   return (
     <div
       ref={drop}
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        border: "1px solid",
-        borderColor: canDrop ? "dark" : "border",
-        borderRadius: 16,
-        minHeight: "128px",
-        m: "16px",
-      }}
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      {game.cats.map((cat) => {
-        const { id, color, faceColor } = cat.get();
-        return (
-          <div
-            key={id}
-            sx={{
-              margin: "-8px",
-              display: "inline-block",
-            }}
-          >
-            <Cat
-              id={id}
-              color={color}
-              faceColor={faceColor}
-              mood={MOODS.SITTING}
-              size={size}
-            />
-          </div>
-        );
-      })}
+      <div
+        sx={{
+          display: "inline-flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          border: "1px solid",
+          borderColor: canDrop ? "dark" : "border",
+          borderRadius: 16,
+          m: "16px auto",
+        }}
+      >
+        {game.cats.map((cat) => {
+          const { id, color, faceColor } = cat.get();
+          return (
+            <div
+              key={id}
+              sx={{
+                margin: "-8px",
+                display: "inline-block",
+              }}
+            >
+              <Cat
+                id={id}
+                color={color}
+                faceColor={faceColor}
+                mood={MOODS.SITTING}
+                size={size}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
