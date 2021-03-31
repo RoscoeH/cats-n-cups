@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Cat } from "../components/Cat";
 import { Cup } from "../components/Cup";
 import Button from "../components/Button";
+import WiggleText from "../components/WiggleText";
 import { generateColors } from "../core/utils";
 import { useMemo } from "react";
 
@@ -44,8 +45,8 @@ const Home = () => {
   const colors = useMemo(() => generateColors(3), []);
   return (
     <motion.div variants={variants} initial="out" animate="in" exit="out">
-      <motion.div variants={childVariants}>
-        <Styled.h1 sx={{ textAlign: "center" }}>Cats in Cups</Styled.h1>
+      <motion.div variants={childVariants} sx={{ textAlign: "center" }}>
+        <WiggleText sx={{ fontSize: 4 }}>Cats in Cups</WiggleText>
       </motion.div>
       <motion.div
         variants={childVariants}
