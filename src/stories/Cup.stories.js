@@ -1,6 +1,6 @@
 import React from "react";
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 import Cup from "../components/Cup";
 
@@ -8,11 +8,7 @@ export default {
   title: "Components/Cup",
   component: Cup,
   decorators: [
-    (Story) => (
-      <DndProvider backend={HTML5Backend}>
-        <Story />
-      </DndProvider>
-    ),
+    (Story) => <DndProvider backend={TouchBackend}>{Story()}</DndProvider>,
   ],
 };
 
