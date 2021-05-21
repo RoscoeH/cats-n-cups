@@ -3,11 +3,12 @@ import { Themed } from "theme-ui";
 import { useHistory } from "react-router";
 import { motion } from "framer-motion";
 
+import { getCompletionPercent } from "../core/progress";
 import useProgress from "../hooks/useProgress";
 import LevelButton from "../components/LevelButton";
 import { Helmet } from "react-helmet-async";
 import CompletionPercent from "../components/CompletionPercent";
-import { getCompletionPercent } from "../core/progress";
+import IconButton from "../components/IconButton";
 
 const variants = {
   in: { transition: { staggerChildren: 0.1 } },
@@ -22,7 +23,7 @@ const childVariants = {
   },
 };
 
-export const Levels = ({ levels, percent, onLevelClick }) => (
+export const Levels = ({ levels, percent, onLevelClick, onHomeClick }) => (
   <motion.div
     sx={{ maxWidth: "360px", m: "0 auto" }}
     variants={variants}
@@ -37,12 +38,21 @@ export const Levels = ({ levels, percent, onLevelClick }) => (
       variants={childVariants}
       sx={{ display: "flex", justifyContent: "space-between" }}
     >
-      <div sx={{ flex: "1 1 33%" }} />
+      <div
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          flex: "1 1 33%",
+        }}
+      >
+        <IconButton icon="home" onClick={onHomeClick} />
+      </div>
       <Themed.h1 sx={{ textAlign: "center" }}>Levels</Themed.h1>
       <div
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-end",
           alignItems: "center",
           flex: "1 1 33%",
         }}
@@ -80,11 +90,16 @@ export default function LevelsPage() {
     history.push(`/play/${level}`);
   }
 
+  function handleHomeClick() {
+    history.push("/");
+  }
+
   return (
     <Levels
       levels={progress}
       percent={getCompletionPercent(progress)}
       onLevelClick={handleLevelClick}
+      onHomeClick={handleHomeClick}
     />
   );
 }

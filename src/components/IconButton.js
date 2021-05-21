@@ -2,10 +2,12 @@
 import { InlineIcon } from "@iconify/react";
 import roundMenu from "@iconify/icons-ic/round-menu";
 import roundClose from "@iconify/icons-ic/round-close";
+import roundHome from "@iconify/icons-ic/round-home";
 
 const ICON_DATA = {
   menu: roundMenu,
   close: roundClose,
+  home: roundHome,
 };
 export const ICONS = Object.keys(ICON_DATA);
 
