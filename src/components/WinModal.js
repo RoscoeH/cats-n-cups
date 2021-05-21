@@ -25,8 +25,8 @@ const variants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.5,
-      duration: 0.5,
+      delay: 0.2,
+      duration: 0.2,
       ease: "easeOut",
     },
   },
@@ -56,7 +56,7 @@ const WinModal = ({ time, moves, stars }) => {
     setProgress(newProgress);
     setData(newProgress);
 
-    const timeout = setTimeout(sequenceAnimation, 2000);
+    const timeout = setTimeout(sequenceAnimation, 1500);
     return () => clearTimeout(timeout);
   });
 
