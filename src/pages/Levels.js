@@ -7,6 +7,7 @@ import useProgress from "../hooks/useProgress";
 import LevelButton from "../components/LevelButton";
 import { Helmet } from "react-helmet-async";
 import CompletionPercent from "../components/CompletionPercent";
+import { getCompletionPercent } from "../core/progress";
 
 const variants = {
   in: { transition: { staggerChildren: 0.1 } },
@@ -21,7 +22,7 @@ const childVariants = {
   },
 };
 
-export const Levels = ({ levels, onLevelClick }) => (
+export const Levels = ({ levels, percent, onLevelClick }) => (
   <motion.div
     sx={{ maxWidth: "360px", m: "0 auto" }}
     variants={variants}
@@ -46,7 +47,7 @@ export const Levels = ({ levels, onLevelClick }) => (
           flex: "1 1 33%",
         }}
       >
-        <CompletionPercent percent="61" />
+        {percent > 0 && <CompletionPercent percent={percent} />}
       </div>
     </motion.div>
     <motion.div
@@ -79,5 +80,11 @@ export default function LevelsPage() {
     history.push(`/play/${level}`);
   }
 
-  return <Levels levels={progress} onLevelClick={handleLevelClick} />;
+  return (
+    <Levels
+      levels={progress}
+      percent={getCompletionPercent(progress)}
+      onLevelClick={handleLevelClick}
+    />
+  );
 }

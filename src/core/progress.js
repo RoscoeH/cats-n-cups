@@ -21,3 +21,12 @@ export function completeLevel(levels, number, stars) {
 
   return levels;
 }
+
+export function getCompletionPercent(progress) {
+  let completionPercent = 0;
+  if (progress) {
+    const stars = progress.reduce((count, level) => count + level.stars, 0);
+    completionPercent = Math.round((stars / (progress.length * 3)) * 100);
+  }
+  return completionPercent;
+}
