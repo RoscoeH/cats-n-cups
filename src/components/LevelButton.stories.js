@@ -1,5 +1,5 @@
 import React from "react";
-import LevelButton from "../components/LevelButton";
+import LevelButton from "./LevelButton";
 
 export default {
   title: "Components/LevelButton",
