@@ -1,13 +1,16 @@
 /** @jsxImportSource theme-ui */
+import { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import { generateColors } from "../core/utils";
+import useProgress from "../hooks/useProgress";
 import { Cat } from "../components/Cat";
 import { Cup } from "../components/Cup";
 import Button from "../components/Button";
 import WiggleText from "../components/WiggleText";
-import { generateColors } from "../core/utils";
-import { useMemo } from "react";
+import CompletionPercent from "../components/CompletionPercent";
+import { getCompletionPercent } from "../core/progress";
 
 const variants = {
   in: {
@@ -40,6 +43,7 @@ const childVariants = {
 
 const Home = () => {
   const history = useHistory();
+  const [progress] = useProgress();
   const colors = useMemo(() => generateColors(3), []);
   return (
     <motion.div variants={variants} initial="out" animate="in" exit="out">
@@ -78,6 +82,9 @@ const Home = () => {
         exit="out"
         sx={{ textAlign: "center" }}
       >
+        <div sx={{ py: 2 }}>
+          <CompletionPercent percent={getCompletionPercent(progress)} />
+        </div>
         <Button
           large
           sx={{ textAlign: "center" }}

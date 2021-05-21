@@ -16,7 +16,7 @@ function getStarIconForPercentage(percentage) {
   return icon;
 }
 
-export default function CompletionPercent({ percent }) {
+export default function CompletionPercent({ percent = 0 }) {
   const cappedPercent = Math.min(percent, 100);
   return (
     <div
