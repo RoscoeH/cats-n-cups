@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, Styled, useThemeUI } from "theme-ui";
+/** @jsxImportSource theme-ui */
+import { Styled, useThemeUI } from "theme-ui";
 import { InlineIcon } from "@iconify/react";
 import roundLock from "@iconify/icons-ic/round-lock";
 

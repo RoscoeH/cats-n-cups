@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Styled, jsx } from "theme-ui";
+/** @jsxImportSource theme-ui */
+import { Styled } from "theme-ui";
 import { useHistory, useParams } from "react-router";
 import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";

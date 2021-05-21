@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "theme-ui";
+/** @jsxImportSource theme-ui */
 import { InlineIcon } from "@iconify/react";
 import roundStarBorder from "@iconify/icons-ic/round-star-border";
 import roundStar from "@iconify/icons-ic/round-star";

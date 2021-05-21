@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "theme-ui";
+/** @jsxImportSource theme-ui */
 import Cup from "./Cup";
 import { useGame } from "../hooks/useGame";
 import { range } from "../core/utils";

@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, useThemeUI } from "theme-ui";
+/** @jsxImportSource theme-ui */
+import { useThemeUI } from "theme-ui";
 import { motion } from "framer-motion";
 
 const Button = ({ children, large, secondary, ...props }) => {

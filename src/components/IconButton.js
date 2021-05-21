@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "theme-ui";
+/** @jsxImportSource theme-ui */
 import { InlineIcon } from "@iconify/react";
 import roundMenu from "@iconify/icons-ic/round-menu";
 import roundClose from "@iconify/icons-ic/round-close";
