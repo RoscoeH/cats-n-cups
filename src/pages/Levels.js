@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import useProgress from "../hooks/useProgress";
 import LevelButton from "../components/LevelButton";
 import { Helmet } from "react-helmet-async";
+import CompletionPercent from "../components/CompletionPercent";
 
 const variants = {
   in: { transition: { staggerChildren: 0.1 } },
@@ -31,8 +32,22 @@ export const Levels = ({ levels, onLevelClick }) => (
     <Helmet>
       <title>Levels</title>
     </Helmet>
-    <motion.div variants={childVariants}>
+    <motion.div
+      variants={childVariants}
+      sx={{ display: "flex", justifyContent: "space-between" }}
+    >
+      <div sx={{ flex: "1 1 33%" }} />
       <Themed.h1 sx={{ textAlign: "center" }}>Levels</Themed.h1>
+      <div
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: "1 1 33%",
+        }}
+      >
+        <CompletionPercent percent="61" />
+      </div>
     </motion.div>
     <motion.div
       variants={childVariants}
