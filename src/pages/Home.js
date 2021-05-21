@@ -47,7 +47,7 @@ const Home = () => {
   const colors = useMemo(() => generateColors(3), []);
   return (
     <motion.div variants={variants} initial="out" animate="in" exit="out">
-      <motion.div variants={childVariants} sx={{ textAlign: "center" }}>
+      <motion.div variants={childVariants} sx={{ textAlign: "center", pt: 3 }}>
         <WiggleText sx={{ fontSize: 4 }}>Cats in Cups</WiggleText>
       </motion.div>
       <motion.div
