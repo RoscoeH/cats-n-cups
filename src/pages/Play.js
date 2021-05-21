@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "theme-ui";
+/** @jsxImportSource theme-ui */
 import { useParams, Redirect } from "react-router";
 import useDimensions from "react-use-dimensions";
 import { motion } from "framer-motion";
@@ -13,6 +11,7 @@ import CustomDragLayer from "../components/CustomDragLayer";
 import { useGame } from "../hooks/useGame";
 import { useObservable } from "../hooks/useObservable";
 import useProgress from "../hooks/useProgress";
+import { Helmet } from "react-helmet-async";
 
 const MAX_SIZE = 112;
 
@@ -44,6 +43,9 @@ export const Play = ({ game }) => {
         overflow: "hidden",
       }}
     >
+      <Helmet>
+        <title>Play</title>
+      </Helmet>
       <CustomDragLayer size={cellSize} />
       <Header />
       <Grid size={cellSize} />

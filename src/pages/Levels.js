@@ -1,11 +1,11 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, Styled } from "theme-ui";
+/** @jsxImportSource theme-ui */
+import { Styled } from "theme-ui";
 import { useHistory } from "react-router";
 import { motion } from "framer-motion";
 
 import useProgress from "../hooks/useProgress";
 import LevelButton from "../components/LevelButton";
+import { Helmet } from "react-helmet-async";
 
 const variants = {
   in: { transition: { staggerChildren: 0.1 } },
@@ -28,6 +28,9 @@ export const Levels = ({ levels, onLevelClick }) => (
     animate="in"
     exit="out"
   >
+    <Helmet>
+      <title>Levels</title>
+    </Helmet>
     <motion.div variants={childVariants}>
       <Styled.h1 sx={{ textAlign: "center" }}>Levels</Styled.h1>
     </motion.div>

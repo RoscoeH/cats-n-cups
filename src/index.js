@@ -1,20 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { ThemeProvider } from "theme-ui";
 
 import App from "./App";
-import theme from "./core/theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
-        <App />
-      </DndProvider>
-    </ThemeProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
