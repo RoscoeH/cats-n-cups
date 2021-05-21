@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { Styled, useThemeUI } from "theme-ui";
+import { Themed, useThemeUI } from "theme-ui";
 import { InlineIcon } from "@iconify/react";
 import roundLock from "@iconify/icons-ic/round-lock";
 
@@ -45,7 +45,7 @@ const LevelButton = ({ number, stars = null, locked, onClick, ...props }) => {
         />
       ) : (
         <div>
-          <Styled.h2 sx={{ color: "dark" }}>{number}</Styled.h2>
+          <Themed.h2 sx={{ color: "dark" }}>{number}</Themed.h2>
           <StarBar
             stars={stars}
             size={20}

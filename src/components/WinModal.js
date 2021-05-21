@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { Styled } from "theme-ui";
+import { Themed } from "theme-ui";
 import { useHistory, useParams } from "react-router";
 import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
@@ -88,7 +88,7 @@ const WinModal = ({ time, moves, stars }) => {
         },
       }}
     >
-      <Styled.h2 sx={{ mb: 4 }}>You Win!</Styled.h2>
+      <Themed.h2 sx={{ mb: 4 }}>You Win!</Themed.h2>
       <table sx={{ mx: "auto", mb: 2 }}>
         <tbody>
           <motion.tr

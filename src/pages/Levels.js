@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { Styled } from "theme-ui";
+import { Themed } from "theme-ui";
 import { useHistory } from "react-router";
 import { motion } from "framer-motion";
 
@@ -32,7 +32,7 @@ export const Levels = ({ levels, onLevelClick }) => (
       <title>Levels</title>
     </Helmet>
     <motion.div variants={childVariants}>
-      <Styled.h1 sx={{ textAlign: "center" }}>Levels</Styled.h1>
+      <Themed.h1 sx={{ textAlign: "center" }}>Levels</Themed.h1>
     </motion.div>
     <motion.div
       variants={childVariants}
