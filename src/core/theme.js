@@ -1,6 +1,6 @@
 import "typeface-nunito";
 
-export default {
+const theme = {
   fonts: {
     body: '"Nunito", sans-serif',
     heading: '"Nunito", sans-serif',
@@ -49,3 +49,5 @@ export default {
     },
   },
 };
+
+export default theme;
