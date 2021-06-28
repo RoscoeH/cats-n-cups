@@ -18,4 +18,4 @@ jobs:
         shell: bash
         env:
           PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        run: npx chromatic --project-token="$PROJECT_TOKEN"
+        run: npx chromatic --project-token="$PROJECT_TOKEN" --allow-console-errors --exit-once-uploaded
