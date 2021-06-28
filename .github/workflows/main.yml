@@ -16,4 +16,4 @@ jobs:
         shell: bash
         env:
           PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        run: npx chromatic --project-token="$CHROMATIC_PROJECT_TOKEN}
+        run: npx chromatic --project-token="$CHROMATIC_PROJECT_TOKEN}"
