@@ -45,10 +45,13 @@ const Home = () => {
   const history = useHistory();
   const [progress] = useProgress();
   const colors = useMemo(() => generateColors(3), []);
+  const completionPercent = useMemo(() => getCompletionPercent(progress), [
+    progress,
+  ]);
   return (
     <motion.div variants={variants} initial="out" animate="in" exit="out">
       <motion.div variants={childVariants} sx={{ textAlign: "center", pt: 3 }}>
-        <WiggleText sx={{ fontSize: 4 }}>Cats in Cups</WiggleText>
+        <WiggleText sx={{ fontSize: [3, 4] }}>Cats in Cups</WiggleText>
       </motion.div>
       <motion.div
         variants={childVariants}
@@ -83,7 +86,9 @@ const Home = () => {
         sx={{ textAlign: "center" }}
       >
         <div sx={{ py: 2 }}>
-          <CompletionPercent percent={getCompletionPercent(progress)} />
+          {completionPercent > 0 && (
+            <CompletionPercent percent={completionPercent} />
+          )}
         </div>
         <Button
           large

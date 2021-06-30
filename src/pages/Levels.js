@@ -36,7 +36,7 @@ export const Levels = ({ levels, percent, onLevelClick, onHomeClick }) => (
     </Helmet>
     <motion.div
       variants={childVariants}
-      sx={{ display: "flex", justifyContent: "space-between" }}
+      sx={{ display: "flex", justifyContent: "space-between", px: 3 }}
     >
       <div
         sx={{
