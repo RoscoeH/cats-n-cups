@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://catsincups.roscoe.dev">
-    <img alt="Gatsby" src="./public/favicon.ico" width="64" />
+    <img alt="Cats In Cups" src="./public/favicon.ico" width="64" />
   </a>
 </p>
 <h1 align="center">
